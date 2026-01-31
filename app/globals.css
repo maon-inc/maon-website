@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* DotsCanvas colors */
+  --dots-color-gray: #A1A1AA;
+  --dots-color-accent: #00A452;
 }
 
 @theme inline {
