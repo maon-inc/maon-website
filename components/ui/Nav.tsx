@@ -12,16 +12,7 @@ export default function Nav() {
 
       {/* Navigation Links */}
       <div className="hidden items-center gap-8 md:flex">
-        {NAV.links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="font-medium text-[#1b1b1b] transition-opacity hover:opacity-70"
-            style={{ fontSize: FONT_SIZES.navLink }}
-          >
-            {link.label}
-          </Link>
-        ))}
+        {/* Navigation links - currently empty */}
         <Link
           href={NAV.cta.href}
           className="inline-flex w-fit items-center justify-center gap-1.5 px-3 py-1.5 font-medium text-[#1b1b1b] transition-opacity hover:opacity-90"

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV, FONTS } from "@/lib/constants";
+import { FONTS } from "@/lib/constants";
 
 export default function Footer() {
   const textStyle = {
@@ -20,16 +20,7 @@ export default function Footer() {
 
           {/* Center: Navigation Links */}
           <div className="flex items-center gap-8">
-            {NAV.links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="font-bold hover:opacity-70 transition-opacity"
-                style={textStyle}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {/* Navigation links - currently empty */}
           </div>
 
           {/* Right: Social Icons and Legal Links */}
@@ -109,16 +100,7 @@ export default function Footer() {
 
           {/* 2. Navigation Links */}
           <div className="flex items-center gap-6">
-            {NAV.links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="font-bold hover:opacity-70 transition-opacity"
-                style={textStyle}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {/* Navigation links - currently empty */}
           </div>
 
           {/* 3. Social Media Links */}
