@@ -27,7 +27,7 @@ export const FONT_SIZES = {
   heroHeading: "48px",
   mainHeading: "35px",
   subtitle: "30px",
-  cardText: "35.07px",
+  cardText: "27px",
   label: "15px",
   button: "24px",
   navLink: "15px",
@@ -102,7 +102,6 @@ export const SITE = {
 export const NAV = {
   links: [
     { label: "our story", href: "/our-story" },
-    { label: "how it works", href: "/how-it-works" },
   ],
   cta: {
     label: "save your spot",

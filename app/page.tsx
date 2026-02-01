@@ -7,7 +7,7 @@ import DotsCanvas from "@/components/motion/DotsCanvas";
 export default function Home() {
   return (
     <DotsCanvas
-      count={1200}
+      count={400}
       dotRadius={1.8}
       targetWidth={500}
       targetHeight={500}
@@ -15,7 +15,7 @@ export default function Home() {
       colorAccent="#00A452"
       initialDurationMs={1500}
       transitionDurationMs={500}
-      morphSpeed={0.4}
+      morphSpeed={0.15}
     >
       <main>
         <Hook />

@@ -34,7 +34,7 @@ export default function Problem() {
       {/* Card container - z-20 to appear above dots canvas */}
       <div className="relative z-20 overflow-hidden rounded-[32px] bg-[#1b1b1b] px-16 py-16">
         {/* Decorative green dots with falling animation */}
-        <div className="absolute right-16 top-0 flex flex-col items-end gap-6">
+        {/* <div className="absolute right-16 top-0 flex flex-col items-end gap-6">
           {Array.from({ length: 20 }, (_, i) => i).map((i) => (
             <div
               key={i}
@@ -45,20 +45,45 @@ export default function Problem() {
               }}
             />
           ))}
-        </div>
+        </div> */}
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl">
           {/* Label */}
-          <p className="font-bold text-[#f7f6f5]" style={{ fontSize: FONT_SIZES.label }}>{PROBLEM.label}</p>
+          <p
+            className="font-bold text-[#f7f6f5]"
+            style={{
+              fontSize: FONT_SIZES.label,
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0)" : "translateY(40px)",
+              transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+            }}
+          >
+            {PROBLEM.label}
+          </p>
 
           {/* Main statement */}
-          <h2 className="mt-20 w-[75%] font-medium leading-tight text-[#f7f6f5]" style={{ fontSize: FONT_SIZES.mainHeading }}>
+          <h2
+            className="mt-20 w-[75%] font-medium leading-tight text-[#f7f6f5]"
+            style={{
+              fontSize: FONT_SIZES.mainHeading,
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0)" : "translateY(40px)",
+              transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
+            }}
+          >
             {PROBLEM.headline}
           </h2>
 
           {/* Quote section */}
-          <div className="mt-32 rounded-2xl border border-white/10 p-10">
+          <div
+            className="mt-32 rounded-2xl border border-white/10 p-10"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0)" : "translateY(40px)",
+              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
+            }}
+          >
             {/* Quote marks */}
             <svg
               width="72"

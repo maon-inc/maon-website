@@ -663,18 +663,18 @@ export default function DotsCanvas({
         let noiseFreq: number;
 
         if (profileType < 7) {
-          baseStiffness = 4.0 + r4 * 3.0;
-          baseDamping = 0.92 + r5 * 0.03;
+          baseStiffness = 3.5 + r4 * 2.0;
+          baseDamping = 0.82 + r5 * 0.02;
           baseNoiseAmp = 2.5 + r6 * 2.0;
           noiseFreq = 0.4 + r7 * 0.2;
         } else if (profileType < 9) {
-          baseStiffness = 3.0 + r4 * 2.5;
-          baseDamping = 0.9 + r5 * 0.04;
+          baseStiffness = 2.8 + r4 * 1.5;
+          baseDamping = 0.80 + r5 * 0.03;
           baseNoiseAmp = 3.5 + r6 * 2.5;
           noiseFreq = 0.6 + r7 * 0.3;
         } else {
-          baseStiffness = 2.0 + r4 * 2.0;
-          baseDamping = 0.85 + r5 * 0.05;
+          baseStiffness = 2.0 + r4 * 1.2;
+          baseDamping = 0.78 + r5 * 0.04;
           baseNoiseAmp = 4.5 + r6 * 3.0;
           noiseFreq = 0.5 + r7 * 0.4;
         }
