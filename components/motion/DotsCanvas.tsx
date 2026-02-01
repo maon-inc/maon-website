@@ -385,6 +385,12 @@ export default function DotsCanvas({
   const lockUntilRef = useRef<number>(0);
   const lockSceneIdRef = useRef<string | null>(null);
   const lockStartRef = useRef<number>(0);
+  // Track when we last left a scattered mode (dissipate/scatter) for delayed snap detection
+  const lastScatteredModeEndRef = useRef<number>(0);
+  // Snap animation state (similar to initial animation but shorter)
+  const snapAnimationStartRef = useRef<number>(0);
+  const snapAnimationDurationRef = useRef<number>(0);
+  const snapStartPositionsRef = useRef<Point[]>([]);
 
   // Pre-parse colors (use fallbacks for initial SSR render)
   const grayRgbRef = useRef(hexToRgb(colorGray ?? CSS_FALLBACK_GRAY));
@@ -1039,6 +1045,10 @@ export default function DotsCanvas({
 
       const prevMode = activeModeRef.current;
       if (blend.mode !== prevMode) {
+        // Track when we leave a scattered mode so we can detect it even frames later
+        if (prevMode === "dissipate" || prevMode === "scatter") {
+          lastScatteredModeEndRef.current = timeMs;
+        }
         modeTransitionRef.current = {
           from: prevMode,
           to: blend.mode,
@@ -1064,13 +1074,42 @@ export default function DotsCanvas({
       };
 
       if (activeScene && blend.mode === "svg") {
+        // Check if we're transitioning from dissipate or scatter (dots are scattered with high velocity)
+        // Use timestamp-based detection since mode change and controller change can happen on different frames
+        const recentlyLeftScatteredMode = timeMs - lastScatteredModeEndRef.current < 500;
+        const comingFromScatteredMode =
+          modeTransitionRef.current?.from === "dissipate" ||
+          modeTransitionRef.current?.from === "scatter" ||
+          recentlyLeftScatteredMode;
+
         if (activeScene.snapOnEnter && (controllerChanged || providerKeyChanged)) {
-          burstUntilRef.current = timeMs + SNAP_ON_ENTER_BURST_MS;
           burstSceneIdRef.current = blend.activeSceneId;
-          // Use a small, capped burst boost (not scene multipliers again).
-          burstStiffnessMultRef.current = 1.25;
-          burstDampingMultRef.current = 1.0;
-          burstMaxSpeedMultRef.current = 1.25;
+
+          // When coming from dissipate/scatter, use smooth lerp animation (like initial animation)
+          // Only start if not already animating (prevent double trigger)
+          const alreadyAnimating =
+            snapAnimationDurationRef.current > 0 &&
+            timeMs < snapAnimationStartRef.current + snapAnimationDurationRef.current;
+          if (comingFromScatteredMode && !alreadyAnimating) {
+            // Store current positions as snap start positions
+            const dots = dotsRef.current;
+            const startPositions: Point[] = new Array(dots.length);
+            for (let i = 0; i < dots.length; i++) {
+              startPositions[i] = { x: dots[i].pos.x, y: dots[i].pos.y };
+              // Kill velocity for clean animation
+              dots[i].vel.x = 0;
+              dots[i].vel.y = 0;
+            }
+            snapStartPositionsRef.current = startPositions;
+            snapAnimationStartRef.current = timeMs;
+            snapAnimationDurationRef.current = 1200; // 1200ms animation for smooth feel
+          } else if (!comingFromScatteredMode) {
+            burstUntilRef.current = timeMs + SNAP_ON_ENTER_BURST_MS;
+            // Use a small, capped burst boost (not scene multipliers again).
+            burstStiffnessMultRef.current = 1.25;
+            burstDampingMultRef.current = 1.0;
+            burstMaxSpeedMultRef.current = 1.25;
+          }
         }
 
         if (controllerChanged || providerKeyChanged) {
@@ -1378,9 +1417,35 @@ export default function DotsCanvas({
           ? retargetBoostFactorRef.current
           : 1;
 
+      // Check if snap animation is active (similar to initial animation but for returning from dissipate)
+      const snapAnimationActive =
+        snapAnimationDurationRef.current > 0 &&
+        timestamp < snapAnimationStartRef.current + snapAnimationDurationRef.current;
+      const snapProgress = snapAnimationActive
+        ? clamp01((timestamp - snapAnimationStartRef.current) / snapAnimationDurationRef.current)
+        : 0;
+      const easedSnapProgress = easeInOutCubic(snapProgress);
+      const snapStartPositions = snapStartPositionsRef.current;
+
+      // Clear snap animation when complete
+      if (!snapAnimationActive && snapAnimationDurationRef.current > 0) {
+        snapAnimationDurationRef.current = 0;
+        snapStartPositionsRef.current = [];
+      }
+
       for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
         const home = currentHome[i] || currentHome[0];
+
+        // Handle snap animation (lerp from scattered positions to home, like initial animation)
+        if (snapAnimationActive && snapStartPositions[i]) {
+          const startPos = snapStartPositions[i];
+          dot.pos.x = lerp(startPos.x, home.x, easedSnapProgress);
+          dot.pos.y = lerp(startPos.y, home.y, easedSnapProgress);
+          dot.vel.x = 0;
+          dot.vel.y = 0;
+          continue;
+        }
 
         if (phase === "initial") {
           dot.pos.x = lerp(dot.startPos.x, home.x, easedInitialProgress);
@@ -1802,12 +1867,14 @@ export default function DotsCanvas({
       }
 
       if (startTsRef.current === null) {
-        // Only start animation once we have some targets to animate towards.
-        // This handles the race condition where the engine starts before
-        // scene targets have been loaded.
+        // Only start animation once we have BOTH scenes registered AND their targets loaded.
+        // This prevents the animation timer from starting before everything is ready,
+        // which would cause dots to jump/stutter when targets finally load.
+        const hasScenes = scenesRef.current.size > 0;
         const hasTargets = sceneTargetsRef.current.size > 0 || currentHomeRef.current.length > 0;
-        if (!hasTargets && scenesRef.current.size > 0) {
-          // Scenes registered but targets not loaded yet - wait
+
+        if (!hasScenes || !hasTargets) {
+          // Wait until both conditions are met
           lastTimeRef.current = state.time;
           return;
         }

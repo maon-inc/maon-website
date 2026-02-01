@@ -3,13 +3,16 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { VISION, FONT_SIZES } from "@/lib/constants";
+import { VISION, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Vision() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+  const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -32,6 +35,7 @@ export default function Vision() {
       morphSpeedMult={2}
       stiffnessMult={2}
       snapOnEnter
+      homeSnapMs={400}
       className="min-h-screen bg-[#f7f6f5] px-20 py-28"
     >
       <div ref={sectionRef}>
@@ -39,7 +43,7 @@ export default function Vision() {
         <p
           className="font-semibold text-[#8d8d8d]"
           style={{
-            fontSize: FONT_SIZES.label,
+            fontSize: fonts.label,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
@@ -53,7 +57,7 @@ export default function Vision() {
           <h2
             className="font-medium leading-tight text-[#1b1b1b]"
             style={{
-              fontSize: FONT_SIZES.mainHeading,
+              fontSize: fonts.mainHeading,
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
               transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
@@ -65,7 +69,7 @@ export default function Vision() {
           <p
             className="mt-8 font-medium text-[#1b1b1b]"
             style={{
-              fontSize: FONT_SIZES.mainHeading,
+              fontSize: fonts.mainHeading,
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
               transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",

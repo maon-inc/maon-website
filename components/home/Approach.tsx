@@ -2,13 +2,16 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import { APPROACH, FONT_SIZES } from "@/lib/constants";
+import { APPROACH, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Approach() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+  const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -34,7 +37,7 @@ export default function Approach() {
         <p
           className="mt-8 font-semibold text-[#8d8d8d]"
           style={{
-            fontSize: FONT_SIZES.label,
+            fontSize: fonts.label,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
@@ -44,9 +47,8 @@ export default function Approach() {
         </p>
 
         <h2
-          className="pt-30 max-w-5xl font-medium leading-tight text-[#1b1b1b]"
+          className="pt-30 max-w-5xl font-medium leading-tight text-[#1b1b1b] md:text-[35px] lg:text-[48px]"
           style={{
-            fontSize: FONT_SIZES.mainHeading,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
@@ -55,10 +57,10 @@ export default function Approach() {
           {APPROACH.headline}
         </h2>
 
-        <div className="mt-14 grid w-[90%] grid-cols-4 gap-6">
+        <div className="mt-14 grid md:w-[100%] lg:w-[90%] grid-cols-4 gap-6">
           {/* Card 1: Listen to your body */}
           <div
-            className="flex aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
+            className="flex md:aspect-[1/1.6] lg:aspect-[1/1.4] xl:aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -69,7 +71,7 @@ export default function Approach() {
               <div className="flex">
                 <Image src="/assets/listen.svg" alt="Listen to your body" width={0} height={48} style={{ width: 'auto', height: 48 }} />
               </div>
-              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: FONT_SIZES.cardText }}>
+              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: fonts.cardText }}>
                 {APPROACH.cards[0].title}
               </p>
             </div>
@@ -77,7 +79,7 @@ export default function Approach() {
 
           {/* Card 2: Identify emotional patterns */}
           <div
-            className="flex aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
+            className="flex md:aspect-[1/1.6] lg:aspect-[1/1.4] xl:aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -88,7 +90,7 @@ export default function Approach() {
               <div className="flex">
                 <Image src="/assets/pattern.svg" alt="Identify emotional patterns" width={0} height={48} style={{ width: 'auto', height: 48 }} />
               </div>
-              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: FONT_SIZES.cardText }}>
+              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: fonts.cardText }}>
                 {APPROACH.cards[1].title}
               </p>
             </div>
@@ -96,7 +98,7 @@ export default function Approach() {
 
           {/* Card 3: Step in when it matters */}
           <div
-            className="flex aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
+            className="flex md:aspect-[1/1.6] lg:aspect-[1/1.4] xl:aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -107,7 +109,7 @@ export default function Approach() {
               <div className="flex">
                 <Image src="/assets/step.svg" alt="Step in when it matters" width={0} height={48} style={{ width: 'auto', height: 48 }} />
               </div>
-              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: FONT_SIZES.cardText }}>
+              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: fonts.cardText }}>
                 {APPROACH.cards[2].title}
               </p>
             </div>
@@ -115,7 +117,7 @@ export default function Approach() {
 
           {/* Card 4: Show you the bigger picture */}
           <div
-            className="flex aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
+            className="flex md:aspect-[1/1.6] lg:aspect-[1/1.4] xl:aspect-[1/1] items-start justify-center rounded-[20px] bg-white pt-14"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -126,7 +128,7 @@ export default function Approach() {
               <div className="flex">
                 <Image src="/assets/bigger.svg" alt="Show you the bigger picture" width={0} height={48} style={{ width: 'auto', height: 48 }} />
               </div>
-              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: FONT_SIZES.cardText }}>
+              <p className="font-medium text-[#1b1b1b]" style={{ fontSize: fonts.cardText }}>
                 {APPROACH.cards[3].title}
               </p>
             </div>

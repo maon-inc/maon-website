@@ -3,13 +3,16 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { HOOK, FONT_SIZES } from "@/lib/constants";
+import { HOOK, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Hook() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+  const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -32,6 +35,7 @@ export default function Hook() {
       morphSpeedMult={2}
       stiffnessMult={2}
       snapOnEnter
+      homeSnapMs={400}
       className="relative min-h-screen bg-[#f7f6f5]"
     >
       <div ref={sectionRef} className="absolute bottom-55 left-20 max-w-[50%]">
@@ -39,7 +43,7 @@ export default function Hook() {
           className="font-semibold leading-tight text-[#1b1b1b]"
           style={{
             fontFamily: "'Merriweather', serif",
-            fontSize: FONT_SIZES.heroHeading,
+            fontSize: fonts.heroHeading,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
@@ -51,7 +55,7 @@ export default function Hook() {
         <p
           className="mt-4 font-medium text-[#8d8d8d] w-[90%] leading-tight"
           style={{
-            fontSize: FONT_SIZES.subtitle,
+            fontSize: fonts.subtitle,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",

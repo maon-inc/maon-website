@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #F7F6F5;
   --foreground: #171717;
 
   /* DotsCanvas colors */
@@ -18,7 +18,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #F7F6F5;
     --foreground: #ededed;
   }
 }

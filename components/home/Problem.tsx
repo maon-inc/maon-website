@@ -1,13 +1,16 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { PROBLEM, FONT_SIZES } from "@/lib/constants";
+import { PROBLEM, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Problem() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+  const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -53,7 +56,7 @@ export default function Problem() {
           <p
             className="font-bold text-[#f7f6f5]"
             style={{
-              fontSize: FONT_SIZES.label,
+              fontSize: fonts.label,
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
               transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
@@ -66,7 +69,7 @@ export default function Problem() {
           <h2
             className="mt-20 w-[75%] font-medium leading-tight text-[#f7f6f5]"
             style={{
-              fontSize: FONT_SIZES.mainHeading,
+              fontSize: fonts.mainHeading,
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
               transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
@@ -100,7 +103,7 @@ export default function Problem() {
             </svg>
 
             {/* Quote text */}
-            <p className="font-medium w-[80%] leading-tight text-[#f7f6f5]" style={{ fontSize: FONT_SIZES.mainHeading }}>
+            <p className="font-medium w-[80%] leading-tight text-[#f7f6f5]" style={{ fontSize: fonts.mainHeading }}>
               {PROBLEM.quote.text}
             </p>
 

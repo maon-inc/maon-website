@@ -33,6 +33,16 @@ export const FONT_SIZES = {
   navLink: "15px",
 } as const;
 
+export const FONT_SIZES_MOBILE = {
+  heroHeading: "32px",
+  mainHeading: "24px",
+  subtitle: "20px",
+  cardText: "18px",
+  label: "12px",
+  button: "18px",
+  navLink: "14px",
+} as const;
+
 // ============================================
 // BUTTON STYLES (reference: sans-400-16, sans-400-20)
 // ============================================
@@ -104,7 +114,7 @@ export const NAV = {
     { label: "our story", href: "/our-story" },
   ],
   cta: {
-    label: "save your spot",
+    label: "waitlist",
     href: "/waitlist",
   },
 } as const;
@@ -115,7 +125,7 @@ export const NAV = {
 
 export const HOOK = {
   headline: "AI mental health assistant plugged into your biometrics",
-  subtext: "emotion layer of AI",
+  subtext: "works with the Apple Watch, etc.",
   cta: {
     label: "Join the waitlist",
     href: "/waitlist",
@@ -165,5 +175,29 @@ export const VISION = {
   cta: {
     label: "save your spot",
     href: "/waitlist",
+  },
+} as const;
+
+// ============================================
+// DO'S & DON'TS SECTION
+// ============================================
+
+export const DOS_DONTS = {
+  label: "do's & don'ts",
+  doSection: {
+    title: "what we do",
+    cards: [
+      { text: "provide supportive and optional interventions", icon: "/assets/provide.svg" },
+      { text: "give you full control over data and features", icon: "/assets/full_control.svg" },
+      { text: "use simple, non-medical language", icon: "/assets/medical.svg" },
+    ],
+  },
+  dontSection: {
+    title: "what we don't do",
+    cards: [
+      { text: "We don't diagnose mental health conditions" },
+      { text: "We don't label you with disorders" },
+      { text: "We don't contact anyone without your permission" },
+    ],
   },
 } as const;
