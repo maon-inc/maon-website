@@ -4,15 +4,15 @@ export interface GeoLocation {
 }
 
 export async function getGeoLocation(): Promise<GeoLocation> {
-  // Try ip-api.com first (45 requests/minute free, no API key needed)
+  // Try ipwho.is first (HTTPS, no rate limits for reasonable usage)
   try {
-    const response = await fetch("http://ip-api.com/json/?fields=country,regionName");
+    const response = await fetch("https://ipwho.is/");
     if (response.ok) {
       const data = await response.json();
-      if (data.country) {
+      if (data.success && data.country) {
         return {
           country: data.country,
-          region: data.regionName || "Unknown",
+          region: data.region || "Unknown",
         };
       }
     }

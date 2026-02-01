@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useCountdown } from "@/hooks/useCountdown";
 import { useMutation, useQuery, useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -11,8 +12,12 @@ interface WaitlistFormProps {
   waitlistId: Id<"waitlist"> | null;
 }
 
+// Target date: 70 days from Feb 1, 2026 = April 12, 2026
+const LAUNCH_DATE = new Date('2026-04-12T00:00:00Z');
+
 export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const isMobile = useIsMobile();
+  const { days, hours, minutes, seconds, isExpired } = useCountdown(LAUNCH_DATE);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -109,13 +114,13 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
           className="text-black"
           style={{ fontSize: isMobile ? "18px" : "24px" }}
         >
-          Launch in
+          {isExpired ? "We have" : "Launch in"}
         </p>
         <p
           className="font-bold text-black mt-2"
           style={{ fontSize: isMobile ? "30px" : "48px" }}
         >
-          73d 20h 23m 20s
+          {isExpired ? "Launched!" : `${days}d ${hours}h ${minutes}m ${seconds}s`}
         </p>
       </div>
 
