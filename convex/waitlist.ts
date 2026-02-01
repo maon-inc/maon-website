@@ -1,4 +1,4 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query, internalMutation } from "./_generated/server";
 import { v } from "convex/values";
 
 export const create = mutation({
@@ -74,5 +74,22 @@ export const getCount = query({
   handler: async (ctx) => {
     const allEntries = await ctx.db.query("waitlist").collect();
     return allEntries.length;
+  },
+});
+
+// Internal mutation to mark a waitlist entry as early bird (called from webhook)
+export const markAsEarlyBird = internalMutation({
+  args: {
+    waitlistId: v.id("waitlist"),
+    email: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const entry = await ctx.db.get(args.waitlistId);
+    if (!entry) return;
+
+    await ctx.db.patch(args.waitlistId, {
+      email: args.email.toLowerCase(),
+      isEarlyBird: true,
+    });
   },
 });

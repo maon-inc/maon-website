@@ -80,7 +80,9 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const handleEarlyBirdCheckout = async () => {
     setIsCheckoutLoading(true);
     try {
-      const { url } = await createEarlyBirdCheckout({});
+      const { url } = await createEarlyBirdCheckout({
+        waitlistId: waitlistId ?? undefined,
+      });
       if (url) {
         window.location.href = url;
       }

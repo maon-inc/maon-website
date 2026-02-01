@@ -10,21 +10,8 @@ export const metadata = {
 export default function TermsOfService() {
   return (
     <main className="min-h-screen bg-[#f7f6f5] text-[#1b1b1b]">
-      {/* Header */}
-      <header className="w-full px-6 py-6">
-        <div className="max-w-[900px] mx-auto">
-          <Link
-            href="/"
-            className="text-2xl font-bold hover:opacity-70 transition-opacity"
-            style={{ fontFamily: FONTS.sans }}
-          >
-            MA<span className="text-[#00A452]">O</span>N
-          </Link>
-        </div>
-      </header>
-
       {/* Content */}
-      <div className="max-w-[900px] mx-auto px-6 pb-20">
+      <div className="max-w-[900px] mx-auto px-6 pb-20 pt-24">
         <h1
           className="text-4xl md:text-5xl font-bold mb-4"
           style={{ fontFamily: FONTS.sans }}
@@ -324,7 +311,7 @@ export default function TermsOfService() {
             </p>
             <div className="bg-white p-6 rounded-xl border border-[#e5e5e5]">
               <p className="font-semibold mb-2">MAON Intelligence</p>
-              <p>Email: <a href="mailto:legal@maon.ai" className="text-[#00A452] hover:underline">legal@maon.ai</a></p>
+              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></p>
             </div>
           </section>
         </div>

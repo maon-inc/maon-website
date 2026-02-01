@@ -7,12 +7,14 @@ const stripeClient = new StripeSubscriptions(components.stripe, {});
 
 // Early bird checkout - no auth required
 export const createEarlyBirdCheckout = action({
-  args: {},
+  args: {
+    waitlistId: v.optional(v.id("waitlist")),
+  },
   returns: v.object({
     sessionId: v.string(),
     url: v.union(v.string(), v.null()),
   }),
-  handler: async (ctx) => {
+  handler: async (ctx, args) => {
     const baseUrl = process.env.SITE_URL || "http://localhost:3000";
 
     // Create checkout session without requiring auth
@@ -20,10 +22,11 @@ export const createEarlyBirdCheckout = action({
     return await stripeClient.createCheckoutSession(ctx, {
       priceId: process.env.EARLY_BIRD_PRICE_ID!,
       mode: "payment",
-      successUrl: `${baseUrl}?early_bird=success`,
+      successUrl: `${baseUrl}/success`,
       cancelUrl: `${baseUrl}?early_bird=canceled`,
       metadata: {
         type: "early_bird",
+        waitlistId: args.waitlistId || "",
       },
       paymentIntentMetadata: {
         type: "early_bird",

@@ -7,13 +7,14 @@ export default defineSchema({
     country: v.optional(v.string()),
     region: v.optional(v.string()),
     devicePicked: v.optional(v.string()),
+    isEarlyBird: v.optional(v.boolean()),
     // _creationTime is automatically added by Convex
   }).index("by_email", ["email"]),
 
   earlyBirds: defineTable({
     email: v.string(),
     name: v.optional(v.string()),
-    stripeCustomerId: v.string(),
+    stripeCustomerId: v.optional(v.string()),
     stripePaymentIntentId: v.optional(v.string()),
     stripeCheckoutSessionId: v.string(),
     amountPaid: v.number(), // in cents

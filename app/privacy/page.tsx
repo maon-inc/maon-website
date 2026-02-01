@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Footer from "@/components/ui/Footer";
 import { FONTS } from "@/lib/constants";
 
@@ -10,21 +9,8 @@ export const metadata = {
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-[#f7f6f5] text-[#1b1b1b]">
-      {/* Header */}
-      <header className="w-full px-6 py-6">
-        <div className="max-w-[900px] mx-auto">
-          <Link
-            href="/"
-            className="text-2xl font-bold hover:opacity-70 transition-opacity"
-            style={{ fontFamily: FONTS.sans }}
-          >
-            MA<span className="text-[#00A452]">O</span>N
-          </Link>
-        </div>
-      </header>
-
       {/* Content */}
-      <div className="max-w-[900px] mx-auto px-6 pb-20">
+      <div className="max-w-[900px] mx-auto px-6 pb-20 pt-24">
         <h1
           className="text-4xl md:text-5xl font-bold mb-4"
           style={{ fontFamily: FONTS.sans }}
@@ -169,7 +155,7 @@ export default function PrivacyPolicy() {
               <li><strong>Withdraw consent:</strong> Withdraw previously given consent at any time</li>
             </ul>
             <p className="mt-4">
-              To exercise these rights, please contact us at <a href="mailto:privacy@maon.ai" className="text-[#00A452] hover:underline">privacy@maon.ai</a>.
+              To exercise these rights, please contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a>.
             </p>
           </section>
 
@@ -240,7 +226,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="bg-white p-6 rounded-xl border border-[#e5e5e5]">
               <p className="font-semibold mb-2">MAON Intelligence</p>
-              <p>Email: <a href="mailto:privacy@maon.ai" className="text-[#00A452] hover:underline">privacy@maon.ai</a></p>
+              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></p>
             </div>
           </section>
         </div>

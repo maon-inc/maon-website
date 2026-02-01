@@ -45,10 +45,16 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
   }, []);
 
   const handleDeviceClick = async (deviceName: string) => {
+    // Ensure we have geolocation before creating the entry
+    let geo = geoLocation;
+    if (!geo) {
+      geo = await getGeoLocation();
+    }
+
     const id = await createWaitlistEntry({
       devicePicked: deviceName,
-      country: geoLocation?.country,
-      region: geoLocation?.region,
+      country: geo.country,
+      region: geo.region,
     });
     onDeviceSelect?.(id, deviceName);
   };
