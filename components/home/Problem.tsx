@@ -35,7 +35,7 @@ export default function Problem() {
     >
       <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
       {/* Card container - z-20 to appear above dots canvas */}
-      <div className="relative z-20 overflow-hidden rounded-[32px] bg-[#1b1b1b] px-8 py-10 md:px-16 md:py-16">
+      <div className="relative z-20 overflow-hidden rounded-[32px] border border-black/10 px-8 py-10 md:px-16 md:py-16">
         {/* Decorative green dots with falling animation */}
         {/* <div className="absolute right-16 top-0 flex flex-col items-end gap-6">
           {Array.from({ length: 20 }, (_, i) => i).map((i) => (
@@ -54,7 +54,7 @@ export default function Problem() {
         <div className="relative z-10 max-w-4xl">
           {/* Label */}
           <p
-            className="font-bold text-[#f7f6f5]"
+            className="font-bold text-[#1b1b1b]"
             style={{
               fontSize: fonts.label,
               opacity: isVisible ? 1 : 0,
@@ -67,7 +67,7 @@ export default function Problem() {
 
           {/* Main statement */}
           <h2
-            className="mt-20 w-full md:w-[75%] font-medium leading-tight text-[#f7f6f5]"
+            className="mt-20 w-full md:w-[75%] font-medium leading-tight text-[#1b1b1b]"
             style={{
               fontSize: fonts.mainHeading,
               opacity: isVisible ? 1 : 0,
@@ -81,7 +81,7 @@ export default function Problem() {
 
         {/* Quote section - outside max-w-4xl for wider border */}
         <div
-          className="relative z-10 mt-32 rounded-2xl border-2 md:border border-white/10 p-10"
+          className="relative z-10 mt-32 rounded-2xl border-2 md:border border-black/10 p-10"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -104,12 +104,12 @@ export default function Problem() {
           </svg>
 
           {/* Quote text */}
-          <p className="font-medium w-full md:w-[80%] leading-tight text-[#f7f6f5] text-[24px] md:text-[35px]">
+          <p className="font-medium w-full md:w-[80%] leading-tight text-[#1b1b1b] text-[24px] md:text-[35px]">
             {PROBLEM.quote.text}
           </p>
 
           {/* Attribution */}
-          <p className="mt-10 text-[16px] md:text-[20px] font-medium text-[#f7f6f5]">
+          <p className="mt-10 text-[16px] md:text-[20px] font-medium text-[#1b1b1b]">
             {PROBLEM.quote.attribution}
           </p>
         </div>

@@ -8,6 +8,9 @@
  * @module
  */
 
+import type * as earlyBirds from "../earlyBirds.js";
+import type * as http from "../http.js";
+import type * as stripe from "../stripe.js";
 import type * as waitlist from "../waitlist.js";
 
 import type {
@@ -17,6 +20,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  earlyBirds: typeof earlyBirds;
+  http: typeof http;
+  stripe: typeof stripe;
   waitlist: typeof waitlist;
 }>;
 

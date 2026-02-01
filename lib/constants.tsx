@@ -100,7 +100,6 @@ export const BORDER_RADIUS = {
 
 export const ROUTES = {
   home: "/",
-  ourStory: "/our-story",
   howItWorks: "/how-it-works",
   waitlist: "/waitlist",
 } as const;
@@ -119,9 +118,7 @@ export const SITE = {
 // ============================================
 
 export const NAV = {
-  links: [
-    { label: "our story", href: "/our-story" },
-  ],
+  links: [],
   cta: {
     label: "waitlist",
     href: "/waitlist",

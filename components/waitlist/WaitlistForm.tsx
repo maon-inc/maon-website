@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery, useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { observeIntersection } from "@/motion/observe";
@@ -19,9 +19,12 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
   const createWaitlistEntry = useMutation(api.waitlist.create);
   const addEmail = useMutation(api.waitlist.addEmail);
+  const createEarlyBirdCheckout = useAction(api.stripe.createEarlyBirdCheckout);
+  const spotsRemaining = useQuery(api.earlyBirds.getSpotsRemaining);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -71,6 +74,21 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
       }
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleEarlyBirdCheckout = async () => {
+    setIsCheckoutLoading(true);
+    try {
+      const { url } = await createEarlyBirdCheckout({});
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError("Failed to start checkout. Please try again.");
+    } finally {
+      setIsCheckoutLoading(false);
     }
   };
 
@@ -204,20 +222,22 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
           </ul>
 
           <button
-            className="w-full bg-[#B7D7A8] text-[#1b1b1b] font-medium rounded-[10px] mt-6 hover:opacity-90 transition-opacity"
+            onClick={handleEarlyBirdCheckout}
+            disabled={isCheckoutLoading || spotsRemaining === 0}
+            className="w-full bg-[#B7D7A8] text-[#1b1b1b] font-medium rounded-[10px] mt-6 hover:opacity-90 transition-opacity disabled:opacity-50"
             style={{
               fontSize: isMobile ? "14px" : "16px",
               height: isMobile ? "35px" : "46px",
             }}
           >
-            join the program
+            {isCheckoutLoading ? "Loading..." : spotsRemaining === 0 ? "Sold out" : "join the program"}
           </button>
 
           <p
             className="text-center text-black font-medium mt-4"
             style={{ fontSize: isMobile ? "14px" : "16px" }}
           >
-            97/100 spots left
+            {spotsRemaining !== undefined ? `${spotsRemaining}/100 spots left` : "Loading..."}
           </p>
         </div>
       </div>

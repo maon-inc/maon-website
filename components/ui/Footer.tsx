@@ -30,19 +30,12 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href={NAV.cta.href}
-              className="font-bold hover:opacity-70 transition-opacity"
-              style={textStyle}
-            >
-              {NAV.cta.label}
-            </Link>
           </div>
 
           {/* Right: Social Icons and Legal Links */}
           <div className="flex items-center gap-8">
             {/* Social Icons */}
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -85,7 +78,7 @@ export default function Footer() {
                   <path d="M4 4l16 16M4 20L20 4" />
                 </svg>
               </a>
-            </div>
+            </div> */}
 
             {/* Legal Links */}
             <div className="flex items-center gap-6">
@@ -126,17 +119,10 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href={NAV.cta.href}
-              className="font-bold hover:opacity-70 transition-opacity"
-              style={textStyle}
-            >
-              {NAV.cta.label}
-            </Link>
           </div>
 
           {/* 3. Social Media Links */}
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -179,7 +165,7 @@ export default function Footer() {
                 <path d="M4 4l16 16M4 20L20 4" />
               </svg>
             </a>
-          </div>
+          </div> */}
 
           {/* 4. Privacy & TOS */}
           <div className="flex items-center gap-4">
