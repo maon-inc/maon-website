@@ -4,7 +4,7 @@ import { NAV, SITE, FONT_SIZES } from "@/lib/constants";
 
 export default function Nav() {
   return (
-    <nav className="absolute left-0 right-0 top-0 z-50 flex items-center justify-between px-20 py-6">
+    <nav className="absolute left-0 right-0 top-0 z-50 mx-auto flex max-w-[80%] items-center justify-between py-6 md:max-w-none md:mx-0 md:px-20">
       {/* Logo */}
       <Link href="/" className="text-2xl font-bold text-[#1b1b1b]">
         <span>MA</span>
@@ -13,7 +13,7 @@ export default function Nav() {
       </Link>
 
       {/* Navigation Links */}
-      <div className="flex items-center gap-8">
+      <div className="hidden items-center gap-8 md:flex">
         {NAV.links.map((link) => (
           <Link
             key={link.href}

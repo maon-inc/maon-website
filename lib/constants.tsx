@@ -125,7 +125,7 @@ export const NAV = {
 
 export const HOOK = {
   headline: "AI mental health assistant plugged into your biometrics",
-  subtext: "works with the Apple Watch, etc.",
+  subtext: "works with the Apple Watch + more",
   cta: {
     label: "Join the waitlist",
     href: "/waitlist",

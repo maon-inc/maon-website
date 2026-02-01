@@ -31,11 +31,11 @@ export default function Problem() {
       morphSpeedMult={2}
       stiffnessMult={2}
       scrollStartOffset={-500}
-      className="bg-[#f7f6f5] px-20 py-20"
+      className="bg-[#f7f6f5] py-20"
     >
-      <div ref={sectionRef}>
+      <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
       {/* Card container - z-20 to appear above dots canvas */}
-      <div className="relative z-20 overflow-hidden rounded-[32px] bg-[#1b1b1b] px-16 py-16">
+      <div className="relative z-20 overflow-hidden rounded-[32px] bg-[#1b1b1b] px-8 py-10 md:px-16 md:py-16">
         {/* Decorative green dots with falling animation */}
         {/* <div className="absolute right-16 top-0 flex flex-col items-end gap-6">
           {Array.from({ length: 20 }, (_, i) => i).map((i) => (
@@ -67,7 +67,7 @@ export default function Problem() {
 
           {/* Main statement */}
           <h2
-            className="mt-20 w-[75%] font-medium leading-tight text-[#f7f6f5]"
+            className="mt-20 w-full md:w-[75%] font-medium leading-tight text-[#f7f6f5]"
             style={{
               fontSize: fonts.mainHeading,
               opacity: isVisible ? 1 : 0,
@@ -77,41 +77,41 @@ export default function Problem() {
           >
             {PROBLEM.headline}
           </h2>
+        </div>
 
-          {/* Quote section */}
-          <div
-            className="mt-32 rounded-2xl border border-white/10 p-10"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
-            }}
+        {/* Quote section - outside max-w-4xl for wider border */}
+        <div
+          className="relative z-10 mt-32 rounded-2xl border-2 md:border border-white/10 p-10"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateY(0)" : "translateY(40px)",
+            transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
+          }}
+        >
+          {/* Quote marks */}
+          <svg
+            width="72"
+            height="54"
+            viewBox="0 0 72 54"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="mb-10 w-10 h-auto md:w-[72px]"
           >
-            {/* Quote marks */}
-            <svg
-              width="72"
-              height="54"
-              viewBox="0 0 72 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mb-10"
-            >
-              <path
-                d="M0 54V36C0 29.6 1.2 23.9 3.6 18.9C6.13333 13.7667 9.53333 9.53333 13.8 6.2C18.0667 2.73333 22.8667 0.466667 28.2 -0.600001L30.6 6.2C25.5333 7.8 21.4667 10.5333 18.4 14.4C15.4667 18.2667 14 22.6 14 27.4V28.2H28.2V54H0ZM41.8 54V36C41.8 29.6 43 23.9 45.4 18.9C47.9333 13.7667 51.3333 9.53333 55.6 6.2C59.8667 2.73333 64.6667 0.466667 70 -0.600001L72.4 6.2C67.3333 7.8 63.2667 10.5333 60.2 14.4C57.2667 18.2667 55.8 22.6 55.8 27.4V28.2H70V54H41.8Z"
-                fill="#91ef81"
-              />
-            </svg>
+            <path
+              d="M0 54V36C0 29.6 1.2 23.9 3.6 18.9C6.13333 13.7667 9.53333 9.53333 13.8 6.2C18.0667 2.73333 22.8667 0.466667 28.2 -0.600001L30.6 6.2C25.5333 7.8 21.4667 10.5333 18.4 14.4C15.4667 18.2667 14 22.6 14 27.4V28.2H28.2V54H0ZM41.8 54V36C41.8 29.6 43 23.9 45.4 18.9C47.9333 13.7667 51.3333 9.53333 55.6 6.2C59.8667 2.73333 64.6667 0.466667 70 -0.600001L72.4 6.2C67.3333 7.8 63.2667 10.5333 60.2 14.4C57.2667 18.2667 55.8 22.6 55.8 27.4V28.2H70V54H41.8Z"
+              fill="#91ef81"
+            />
+          </svg>
 
-            {/* Quote text */}
-            <p className="font-medium w-[80%] leading-tight text-[#f7f6f5]" style={{ fontSize: fonts.mainHeading }}>
-              {PROBLEM.quote.text}
-            </p>
+          {/* Quote text */}
+          <p className="font-medium w-full md:w-[80%] leading-tight text-[#f7f6f5] text-[24px] md:text-[35px]">
+            {PROBLEM.quote.text}
+          </p>
 
-            {/* Attribution */}
-            <p className="mt-10 text-[20px] font-medium text-[#f7f6f5]">
-              {PROBLEM.quote.attribution}
-            </p>
-          </div>
+          {/* Attribution */}
+          <p className="mt-10 text-[16px] md:text-[20px] font-medium text-[#f7f6f5]">
+            {PROBLEM.quote.attribution}
+          </p>
         </div>
       </div>
       </div>

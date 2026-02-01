@@ -18,6 +18,7 @@ export default function Home() {
       initialDurationMs={1500}
       transitionDurationMs={500}
       morphSpeed={0.15}
+      mobileBreakpoint={768}
     >
       <main>
         <Hook />

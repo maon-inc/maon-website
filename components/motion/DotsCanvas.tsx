@@ -116,6 +116,8 @@ interface DotsCanvasProps {
   colorGray?: string;
   /** Accent color when dots are settled (default: reads from --dots-color-accent CSS variable) */
   colorAccent?: string;
+  /** Breakpoint in pixels below which the animation is disabled (default: 0 = never disabled) */
+  mobileBreakpoint?: number;
 }
 
 // ============================================================================
@@ -326,7 +328,10 @@ export default function DotsCanvas({
   morphSpeed = 0.25,
   colorGray,
   colorAccent,
+  mobileBreakpoint = 0,
 }: DotsCanvasProps) {
+  // Mobile detection state
+  const [isMobileDisabled, setIsMobileDisabled] = useState(false);
   // CSS variable fallbacks (hardcoded for SSR, will be overwritten on mount)
   const CSS_FALLBACK_GRAY = "#A1A1AA";
   const CSS_FALLBACK_ACCENT = "#00A452";
@@ -424,6 +429,19 @@ export default function DotsCanvas({
     }
     colorLUTRef.current = lut;
   }, [colorGray, colorAccent]);
+
+  // Mobile breakpoint detection
+  useEffect(() => {
+    if (mobileBreakpoint <= 0) return;
+
+    const checkMobile = () => {
+      setIsMobileDisabled(window.innerWidth < mobileBreakpoint);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [mobileBreakpoint]);
 
   // -------------------------------------------------------------------------
   // Canvas Setup
@@ -1825,6 +1843,9 @@ export default function DotsCanvas({
   // -------------------------------------------------------------------------
 
   useEffect(() => {
+    // Skip setup when canvas is hidden on mobile
+    if (isMobileDisabled) return;
+
     prefersReducedMotionRef.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -1834,6 +1855,10 @@ export default function DotsCanvas({
 
     const size = setupCanvas();
     if (!size) return;
+
+    // When coming back from mobile view, we need to reinitialize
+    // Mark for reinitialization so dots get set up properly
+    needsReinitRef.current = true;
 
     const scheduleResize = () => {
       if (resizeRafRef.current !== null) return;
@@ -1853,7 +1878,7 @@ export default function DotsCanvas({
       }
       stopResize();
     };
-  }, [setupCanvas]);
+  }, [setupCanvas, isMobileDisabled]);
 
   useEffect(() => {
     const unsubscribe = subscribe((state) => {
@@ -1969,22 +1994,24 @@ export default function DotsCanvas({
 
   return (
     <DotsCanvasContext.Provider value={contextValue}>
-      <div
-        ref={containerRef}
-        className={className}
-        style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 10 }}
-      >
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </div>
+      {!isMobileDisabled && (
+        <div
+          ref={containerRef}
+          className={className}
+          style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 10 }}
+        >
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
+      )}
       {children}
     </DotsCanvasContext.Provider>
   );

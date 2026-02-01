@@ -38,7 +38,7 @@ export default function Hook() {
       homeSnapMs={400}
       className="relative min-h-screen bg-[#f7f6f5]"
     >
-      <div ref={sectionRef} className="absolute bottom-55 left-20 max-w-[50%]">
+      <div ref={sectionRef} className="absolute top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-30 lg:bottom-55 left-0 right-0 mx-auto max-w-[80%] md:left-20 md:right-auto md:mx-0 md:max-w-[50%]">
         <h1
           className="font-semibold leading-tight text-[#1b1b1b]"
           style={{

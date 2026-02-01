@@ -24,16 +24,10 @@ export default function DosDonts() {
       },
       { threshold: 0 }
     );
-  }, []);
+  }, [isMobile]);
 
-  return (
-    <DotsScene
-      dissipate
-      morphSpeedMult={2}
-      stiffnessMult={2}
-      className="min-h-screen bg-[#f7f6f5] px-20 py-14"
-    >
-      <div ref={sectionRef}>
+  const content = (
+    <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
         <p
           className="mt-8 font-semibold text-[#8d8d8d]"
           style={{
@@ -59,19 +53,19 @@ export default function DosDonts() {
           {DOS_DONTS.doSection.title}
         </p>
 
-        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-3 gap-6">
+        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-1 md:grid-cols-3 gap-6">
           {DOS_DONTS.doSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-start justify-center rounded-[20px] bg-white pt-10"
+              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-white py-6 md:pt-10 md:pb-0"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.3 + index * 0.1}s, transform 0.8s ease-out ${0.3 + index * 0.1}s`,
               }}
             >
-              <div className="flex w-3/4 flex-col gap-6">
-                <div className="flex">
+              <div className="flex w-3/4 flex-row md:flex-col items-center md:items-start justify-start gap-6">
+                <div className="flex w-16 shrink-0 justify-center md:justify-start">
                   <Image
                     src={card.icon}
                     alt={card.text}
@@ -81,7 +75,7 @@ export default function DosDonts() {
                   />
                 </div>
                 <p
-                  className="font-medium text-[#1b1b1b]"
+                  className="font-medium text-[#1b1b1b] text-left"
                   style={{ fontSize: fonts.cardText }}
                 >
                   {card.text}
@@ -104,20 +98,20 @@ export default function DosDonts() {
           {DOS_DONTS.dontSection.title}
         </p>
 
-        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-3 gap-6">
+        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-1 md:grid-cols-3 gap-6">
           {DOS_DONTS.dontSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-start justify-center rounded-[20px] bg-[#1b1b1b] pt-14"
+              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-[#1b1b1b] py-6 md:pt-14 md:pb-0"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.75 + index * 0.1}s, transform 0.8s ease-out ${0.75 + index * 0.1}s`,
               }}
             >
-              <div className="flex w-3/4 flex-col">
+              <div className="flex w-3/4 flex-col items-center md:items-start">
                 <p
-                  className="font-medium text-white"
+                  className="font-medium text-white text-center md:text-left"
                   style={{ fontSize: fonts.cardText }}
                 >
                   {card.text}
@@ -126,7 +120,25 @@ export default function DosDonts() {
             </div>
           ))}
         </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-[#f7f6f5] py-14">
+        {content}
       </div>
+    );
+  }
+
+  return (
+    <DotsScene
+      dissipate
+      morphSpeedMult={2}
+      stiffnessMult={2}
+      className="min-h-screen bg-[#f7f6f5] py-14"
+    >
+      {content}
     </DotsScene>
   );
 }
