@@ -1,4 +1,13 @@
 // ============================================
+// FONTS
+// ============================================
+
+export const FONTS = {
+  sans: "'Google Sans Flex', Arial, Helvetica, sans-serif",
+  serif: "'Merriweather', Georgia, serif",
+} as const;
+
+// ============================================
 // COLORS
 // ============================================
 
@@ -14,8 +23,8 @@ export const COLORS = {
     light: "#f7f6f5",
   },
   accent: {
-    green: "#91ef81",
-    greenFaded: "#91ef81/50",
+    green: "#B7D7A8",
+    greenFaded: "#B7D7A8/50",
   },
 } as const;
 

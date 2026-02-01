@@ -87,7 +87,7 @@ export default function Vision() {
             fontSize: "16px",
             border: "0.9px solid black",
             borderRadius: "11.28px",
-            backgroundColor: "#91ef81",
+            backgroundColor: "#B7D7A8",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out 0.45s, transform 0.8s ease-out 0.45s",

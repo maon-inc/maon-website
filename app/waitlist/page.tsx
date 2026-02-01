@@ -8,16 +8,20 @@ import { Id } from "@/convex/_generated/dataModel";
 
 export default function WaitlistPage() {
   const [waitlistId, setWaitlistId] = useState<Id<"waitlist"> | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
-  const handleDeviceSelect = (id: Id<"waitlist">) => {
-    setWaitlistId(id);
+  const handleDeviceSelect = (id: Id<"waitlist"> | undefined) => {
+    if (id) {
+      setWaitlistId(id);
+    }
+    setShowForm(true);
   };
 
   return (
     <div className="min-h-screen bg-[#f7f6f5] flex flex-col">
       <div className="flex-1 flex items-center justify-center py-28">
         <div className="w-full max-w-[80%] md:max-w-3xl lg:max-w-4xl mx-auto">
-          {waitlistId ? (
+          {showForm ? (
             <WaitlistForm waitlistId={waitlistId} />
           ) : (
             <DeviceSelect onDeviceSelect={handleDeviceSelect} />

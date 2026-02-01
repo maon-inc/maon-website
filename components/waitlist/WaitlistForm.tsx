@@ -1,45 +1,90 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { observeIntersection } from "@/motion/observe";
 
 interface WaitlistFormProps {
-  waitlistId: Id<"waitlist">;
+  waitlistId: Id<"waitlist"> | null;
 }
 
 export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const isMobile = useIsMobile();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  const createWaitlistEntry = useMutation(api.waitlist.create);
   const addEmail = useMutation(api.waitlist.addEmail);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    return observeIntersection(
+      el,
+      (intersecting) => {
+        if (intersecting) setIsVisible(true);
+      },
+      { threshold: 0 }
+    );
+  }, []);
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) return;
+
+    if (!isValidEmail(trimmedEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
     setIsSubmitting(true);
     setError("");
 
     try {
-      await addEmail({ id: waitlistId, email: email.trim() });
+      let id = waitlistId;
+      if (!id) {
+        id = await createWaitlistEntry({});
+      }
+      await addEmail({ id, email: trimmedEmail });
       setIsSubmitted(true);
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "";
+      if (message.includes("already on the waitlist")) {
+        setError("You're already on the waitlist!");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div ref={sectionRef} className="flex flex-col items-center w-full">
       {/* Countdown */}
-      <div className="text-center mb-8 md:mb-12">
+      <div
+        className="text-center mb-8 md:mb-12"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+        }}
+      >
         <p
           className="text-black"
           style={{ fontSize: isMobile ? "18px" : "24px" }}
@@ -60,6 +105,9 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
         style={{
           flexDirection: isMobile ? "column" : "row",
           maxWidth: isMobile ? "100%" : "800px",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
         }}
       >
         {/* Waitlist Card */}
@@ -92,16 +140,26 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
             />
             <button
               type="submit"
-              disabled={isSubmitting || isSubmitted}
-              className="w-full bg-[#1b1b1b] text-[#f7f6f5] font-medium rounded-[10px] mt-3 hover:opacity-90 transition-opacity disabled:opacity-50"
+              disabled={isSubmitting || isSubmitted || error.includes("already on the waitlist")}
+              className={`w-full font-medium rounded-[10px] mt-3 transition-opacity disabled:opacity-50 ${
+                error.includes("already on the waitlist")
+                  ? "bg-red-500 text-white"
+                  : "bg-[#1b1b1b] text-[#f7f6f5] hover:opacity-90"
+              }`}
               style={{
                 fontSize: isMobile ? "14px" : "16px",
                 height: isMobile ? "35px" : "46px",
               }}
             >
-              {isSubmitted ? "You're on the list!" : isSubmitting ? "Joining..." : "join the waitlist"}
+              {error.includes("already on the waitlist")
+                ? "You're already on the waitlist!"
+                : isSubmitted
+                  ? "You're on the list!"
+                  : isSubmitting
+                    ? "Joining..."
+                    : "join the waitlist"}
             </button>
-            {error && (
+            {error && !error.includes("already on the waitlist") && (
               <p className="text-red-500 text-sm mt-2">{error}</p>
             )}
           </form>
@@ -146,7 +204,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
           </ul>
 
           <button
-            className="w-full bg-[#91ef81] text-[#1b1b1b] font-medium rounded-[10px] mt-6 hover:opacity-90 transition-opacity"
+            className="w-full bg-[#B7D7A8] text-[#1b1b1b] font-medium rounded-[10px] mt-6 hover:opacity-90 transition-opacity"
             style={{
               fontSize: isMobile ? "14px" : "16px",
               height: isMobile ? "35px" : "46px",

@@ -41,7 +41,7 @@ export default function Problem() {
           {Array.from({ length: 20 }, (_, i) => i).map((i) => (
             <div
               key={i}
-              className={`h-10 w-10 rounded-full bg-[#91ef81] ${i % 2 === 1 ? "mr-8" : ""}`}
+              className={`h-10 w-10 rounded-full bg-[#B7D7A8] ${i % 2 === 1 ? "mr-8" : ""}`}
               style={{
                 transform: isVisible ? "translateY(1000px)" : "translateY(-1500px)",
                 transition: `transform 4s cubic-bezier(0.45, 0, 0.55, 1) ${i * 0.25}s`,
@@ -99,7 +99,7 @@ export default function Problem() {
           >
             <path
               d="M0 54V36C0 29.6 1.2 23.9 3.6 18.9C6.13333 13.7667 9.53333 9.53333 13.8 6.2C18.0667 2.73333 22.8667 0.466667 28.2 -0.600001L30.6 6.2C25.5333 7.8 21.4667 10.5333 18.4 14.4C15.4667 18.2667 14 22.6 14 27.4V28.2H28.2V54H0ZM41.8 54V36C41.8 29.6 43 23.9 45.4 18.9C47.9333 13.7667 51.3333 9.53333 55.6 6.2C59.8667 2.73333 64.6667 0.466667 70 -0.600001L72.4 6.2C67.3333 7.8 63.2667 10.5333 60.2 14.4C57.2667 18.2667 55.8 22.6 55.8 27.4V28.2H70V54H41.8Z"
-              fill="#91ef81"
+              fill="#B7D7A8"
             />
           </svg>
 

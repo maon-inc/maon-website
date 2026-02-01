@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { NAV } from "@/lib/constants";
+import { NAV, FONTS } from "@/lib/constants";
 
 export default function Footer() {
   const textStyle = {
-    fontFamily: "var(--font-sans-2), Arial, Helvetica, sans-serif",
+    fontFamily: FONTS.sans,
     fontSize: "16px",
     lineHeight: "1.4",
   };

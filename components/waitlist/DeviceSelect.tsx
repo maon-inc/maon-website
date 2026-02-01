@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { getGeoLocation, GeoLocation } from "@/lib/geolocation";
+import { observeIntersection } from "@/motion/observe";
 
 const DEVICES = [
   { name: "Apple Watch", icon: "/waitlist/apple.svg" },
@@ -21,11 +22,26 @@ interface DeviceSelectProps {
 
 export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
   const isMobile = useIsMobile();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const createWaitlistEntry = useMutation(api.waitlist.create);
   const [geoLocation, setGeoLocation] = useState<GeoLocation | null>(null);
 
   useEffect(() => {
     getGeoLocation().then(setGeoLocation);
+  }, []);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    return observeIntersection(
+      el,
+      (intersecting) => {
+        if (intersecting) setIsVisible(true);
+      },
+      { threshold: 0 }
+    );
   }, []);
 
   const handleDeviceClick = async (deviceName: string) => {
@@ -37,20 +53,21 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
     onDeviceSelect?.(id, deviceName);
   };
 
-  const handleSkip = async () => {
-    const id = await createWaitlistEntry({
-      country: geoLocation?.country,
-      region: geoLocation?.region,
-    });
-    onDeviceSelect?.(id, undefined);
+  const handleSkip = () => {
+    onDeviceSelect?.(undefined as unknown as Id<"waitlist">, undefined);
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div ref={sectionRef} className="flex flex-col items-center">
       {/* Heading */}
       <h2
         className="font-semibold text-[#1b1b1b] text-center md:text-left w-full"
-        style={{ fontSize: isMobile ? "30px" : "60px" }}
+        style={{
+          fontSize: isMobile ? "30px" : "60px",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+        }}
       >
         Select your device
       </h2>
@@ -63,6 +80,9 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
           gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr",
           gridTemplateRows: isMobile ? "100px 100px 100px" : "160px 160px",
           gap: isMobile ? "12px" : "22px",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
         }}
       >
         {/* Device cards */}
@@ -122,8 +142,13 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
       {/* Skip button */}
       <button
         onClick={handleSkip}
-        className="mt-6 md:mt-8 text-[#1b1b1b] underline cursor-pointer hover:opacity-70 transition-opacity"
-        style={{ fontSize: isMobile ? "16px" : "22px" }}
+        className="mt-6 md:mt-8 text-[#1b1b1b] underline cursor-pointer hover:opacity-70"
+        style={{
+          fontSize: isMobile ? "16px" : "22px",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
+        }}
       >
         Skip
       </button>

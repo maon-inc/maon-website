@@ -6,10 +6,8 @@ export default function Nav() {
   return (
     <nav className="absolute left-0 right-0 top-0 z-50 mx-auto flex max-w-[80%] items-center justify-between py-6 md:max-w-none md:mx-0 md:px-20">
       {/* Logo */}
-      <Link href="/" className="text-2xl font-bold text-[#1b1b1b]">
-        <span>MA</span>
-        <span className="text-[#91ef81]">{SITE.logoHighlight}</span>
-        <span>N</span>
+      <Link href="/">
+        <Image src="/logo.svg" alt={SITE.name} width={100} height={32} />
       </Link>
 
       {/* Navigation Links */}
@@ -31,7 +29,7 @@ export default function Nav() {
             fontSize: FONT_SIZES.navLink,
             border: "0.8px solid black",
             borderRadius: "8px",
-            backgroundColor: "#91ef81",
+            backgroundColor: "#B7D7A8",
           }}
         >
           waitlist

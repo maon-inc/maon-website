@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { HOOK, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
+import { HOOK, FONT_SIZES, FONT_SIZES_MOBILE, FONTS } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -42,7 +42,7 @@ export default function Hook() {
         <h1
           className="font-semibold leading-tight text-[#1b1b1b]"
           style={{
-            fontFamily: "'Merriweather', serif",
+            fontFamily: FONTS.serif,
             fontSize: fonts.heroHeading,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -71,7 +71,7 @@ export default function Hook() {
             fontSize: "16px",
             border: "0.9px solid black",
             borderRadius: "11.28px",
-            backgroundColor: "#91ef81",
+            backgroundColor: "#B7D7A8",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",

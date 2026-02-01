@@ -35,16 +35,24 @@ export const addEmail = mutation({
       // Get the new entry to retrieve its devicePicked
       const newEntry = await ctx.db.get(args.id);
 
-      if (newEntry?.devicePicked && newEntry.devicePicked !== existingEntry.devicePicked) {
-        // Append the new device to existing devices
-        const updatedDevices = existingEntry.devicePicked
-          ? `${existingEntry.devicePicked}, ${newEntry.devicePicked}`
-          : newEntry.devicePicked;
+      // Check if it's an exact duplicate (same email AND same device)
+      const existingDevices = existingEntry.devicePicked?.split(", ") ?? [];
+      const newDevice = newEntry?.devicePicked;
 
-        await ctx.db.patch(existingEntry._id, {
-          devicePicked: updatedDevices,
-        });
+      if (!newDevice || existingDevices.includes(newDevice)) {
+        // Delete the duplicate entry we just created
+        await ctx.db.delete(args.id);
+        throw new Error("You're already on the waitlist!");
       }
+
+      // Different device - append the new device to existing devices
+      const updatedDevices = existingEntry.devicePicked
+        ? `${existingEntry.devicePicked}, ${newDevice}`
+        : newDevice;
+
+      await ctx.db.patch(existingEntry._id, {
+        devicePicked: updatedDevices,
+      });
 
       // Delete the duplicate entry we just created
       await ctx.db.delete(args.id);
