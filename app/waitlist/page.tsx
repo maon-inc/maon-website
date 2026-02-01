@@ -1,10 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import DeviceSelect from "@/components/waitlist/DeviceSelect";
-import WaitlistForm from "@/components/waitlist/WaitlistForm";
+import dynamic from "next/dynamic";
 import Footer from "@/components/ui/Footer";
 import { Id } from "@/convex/_generated/dataModel";
+
+// Dynamically import components that use Convex hooks to prevent SSR issues
+const DeviceSelect = dynamic(() => import("@/components/waitlist/DeviceSelect"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex flex-col items-center">
+      <h2 className="font-semibold text-[#1b1b1b] text-center md:text-left w-full text-[30px] md:text-[60px]">
+        Select your device
+      </h2>
+    </div>
+  ),
+});
+
+const WaitlistForm = dynamic(() => import("@/components/waitlist/WaitlistForm"), {
+  ssr: false,
+  loading: () => <div className="min-h-[400px]" />,
+});
 
 export default function WaitlistPage() {
   const [waitlistId, setWaitlistId] = useState<Id<"waitlist"> | null>(null);
