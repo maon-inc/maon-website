@@ -2,6 +2,7 @@ import Hook from "@/components/home/Hook";
 import Problem from "@/components/home/Problem";
 import Approach from "@/components/home/Approach";
 import Vision from "@/components/home/Vision";
+import Footer from "@/components/ui/Footer";
 import DotsCanvas from "@/components/motion/DotsCanvas";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Problem />
         <Approach />
         <Vision />
+        <Footer />
       </main>
     </DotsCanvas>
   );
