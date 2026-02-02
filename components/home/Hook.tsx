@@ -175,7 +175,11 @@ export default function Hook() {
                 alt={card.alt}
                 width={292}
                 height={183}
-                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                style={{
+                  width: cardSize.cardWidth,
+                  height: cardSize.cardHeight,
+                  filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08))",
+                }}
                 className="object-contain"
               />
             </div>
@@ -199,7 +203,11 @@ export default function Hook() {
                 alt={card.alt}
                 width={292}
                 height={183}
-                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                style={{
+                  width: cardSize.cardWidth,
+                  height: cardSize.cardHeight,
+                  filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08))",
+                }}
                 className="object-contain"
               />
             </div>
@@ -234,7 +242,11 @@ export default function Hook() {
                 alt={card.alt}
                 width={292}
                 height={183}
-                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                style={{
+                  width: cardSize.cardWidth,
+                  height: cardSize.cardHeight,
+                  filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08))",
+                }}
                 className="object-contain"
               />
             </div>
@@ -256,7 +268,11 @@ export default function Hook() {
                 alt={card.alt}
                 width={292}
                 height={183}
-                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                style={{
+                  width: cardSize.cardWidth,
+                  height: cardSize.cardHeight,
+                  filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08))",
+                }}
                 className="object-contain"
               />
             </div>
@@ -351,7 +367,7 @@ export default function Hook() {
       {/* Mobile layout: main image + text, cards in background */}
       <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
         {/* Cards + Main image container - centered */}
-        <div className="relative mb-4">
+        <div className="relative mb-20">
           {/* Pinterest cards - background */}
           <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
             {pinterestCards}
