@@ -120,6 +120,8 @@ interface DotsCanvasProps {
   colorAccent?: string;
   /** Breakpoint in pixels below which the animation is disabled (default: 0 = never disabled) */
   mobileBreakpoint?: number;
+  /** If true, dots start dispersed around the edges of the screen (like dissipate mode) instead of random positions */
+  initiallyDispersed?: boolean;
 }
 
 // ============================================================================
@@ -331,6 +333,7 @@ export default function DotsCanvas({
   colorGray,
   colorAccent,
   mobileBreakpoint = 0,
+  initiallyDispersed = false,
 }: DotsCanvasProps) {
   // Mobile detection state
   const [isMobileDisabled, setIsMobileDisabled] = useState(false);
@@ -666,6 +669,11 @@ export default function DotsCanvas({
     (width: number, height: number) => {
       const dots: Dot[] = [];
 
+      // Pre-calculate edge positions if initiallyDispersed is true
+      const perimeter = 2 * (width + height);
+      const jitterT = Math.min(width, height) * 0.02;
+      const jitterOut = Math.min(width, height) * 0.01;
+
       for (let i = 0; i < count; i++) {
         const seed = i * 7919 + 12345;
         const r1 = seededRandom(seed);
@@ -682,8 +690,50 @@ export default function DotsCanvas({
         const swayPhase = r8 * Math.PI * 2;
         const swayAmp = 3.5 + r9 * 2.5;
 
-        const startX = r1 * width;
-        const startY = r2 * height;
+        let startX: number;
+        let startY: number;
+
+        if (initiallyDispersed) {
+          // Position dots around the edges of the screen (like dissipate mode)
+          const t0 = ((i + 0.5) / count) * perimeter;
+          const j = (r1 - 0.5) * jitterT;
+          const out = (r2 - 0.2) * jitterOut;
+          const t = (t0 + j + perimeter) % perimeter;
+
+          let x = 0;
+          let y = 0;
+          let nx = 0;
+          let ny = 0;
+
+          if (t < width) {
+            x = t;
+            y = -out;
+            nx = 0;
+            ny = -1;
+          } else if (t < width + height) {
+            x = width + out;
+            y = t - width;
+            nx = 1;
+            ny = 0;
+          } else if (t < width + height + width) {
+            x = width - (t - (width + height));
+            y = height + out;
+            nx = 0;
+            ny = 1;
+          } else {
+            x = -out;
+            y = height - (t - (width + height + width));
+            nx = -1;
+            ny = 0;
+          }
+
+          startX = x + nx * out;
+          startY = y + ny * out;
+        } else {
+          // Default: random positions across the canvas
+          startX = r1 * width;
+          startY = r2 * height;
+        }
 
         const coordinatedPhase = i % 4 < 3;
 
@@ -729,7 +779,7 @@ export default function DotsCanvas({
 
       dotsRef.current = dots;
     },
-    [count, dotRadius]
+    [count, dotRadius, initiallyDispersed]
   );
 
   // -------------------------------------------------------------------------
