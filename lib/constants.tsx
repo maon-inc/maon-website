@@ -160,7 +160,7 @@ export const PROBLEM = {
 export const APPROACH = {
   label: "product",
   headline:
-    "We use data from your smart devices to give you a new perspective on your mental health.",
+    "All you need is a smart watch.\nWorks with Apple Watch, Samsung Galaxy Watch, and more.",
   cards: [
     { title: "listen to your body" },
     { title: "identify emotional patterns" },

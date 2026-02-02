@@ -57,14 +57,14 @@ export default function DosDonts() {
           {DOS_DONTS.doSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-[#1b1b1b] py-6 md:pt-10 md:pb-0"
+              className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-[#1b1b1b] px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-10 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.3 + index * 0.1}s, transform 0.8s ease-out ${0.3 + index * 0.1}s`,
               }}
             >
-              <div className="flex w-3/4 flex-row md:flex-col items-center md:items-start justify-start gap-6">
+              <div className="flex w-full max-w-[320px] flex-row items-center justify-start gap-6 md:w-3/4 md:max-w-none md:flex-col md:items-start">
                 <div className="flex w-16 shrink-0 justify-center md:justify-start">
                   <Image
                     src={card.icon}
@@ -102,14 +102,14 @@ export default function DosDonts() {
           {DOS_DONTS.dontSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-white py-6 md:pt-14 md:pb-0"
+              className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-white px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-14 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.75 + index * 0.1}s, transform 0.8s ease-out ${0.75 + index * 0.1}s`,
               }}
             >
-              <div className="flex w-3/4 flex-col items-center md:items-start">
+              <div className="flex w-full max-w-[320px] flex-col items-center md:w-3/4 md:max-w-none md:items-start">
                 <p
                   className="font-medium text-[#1b1b1b] text-center md:text-left"
                   style={{ fontSize: fonts.cardText }}
