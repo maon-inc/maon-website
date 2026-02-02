@@ -50,6 +50,10 @@ interface DotsSceneProps {
    * Default: 0 (starts when element top reaches viewport top)
    */
   scrollStartOffset?: number;
+  /** Per-scene gray color override (hex). Defaults to parent DotsCanvas colorGray */
+  colorGray?: string;
+  /** Per-scene accent color override (hex). Defaults to parent DotsCanvas colorAccent */
+  colorAccent?: string;
   /** Content to render inside this scene section */
   children?: React.ReactNode;
   /** Additional class names for the section wrapper */
@@ -97,6 +101,8 @@ export default function DotsScene({
   targetAnchor,
   targetOffsetY,
   scrollStartOffset = 0,
+  colorGray,
+  colorAccent,
   children,
   className,
   as: Component = "section",
@@ -200,6 +206,8 @@ export default function DotsScene({
         snapRadiusPx,
         snapSpeedPxPerSec,
         targetAnchor,
+        colorGray,
+        colorAccent,
       });
     };
 
@@ -288,6 +296,8 @@ export default function DotsScene({
     lockInMs,
     homeSnapMs,
     unregisterScene,
+    colorGray,
+    colorAccent,
   ]);
 
   // Use callback ref to handle polymorphic component type safely

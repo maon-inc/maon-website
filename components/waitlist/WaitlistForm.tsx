@@ -225,7 +225,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
             </li>
             <li>We will build features relevant to your needs</li>
             <li>Biweekly calls with a team member to identify your pain points</li>
-            <li>full refund whenever</li>
+            <li>Full refund whenever until launch</li>
           </ul>
 
           <button
@@ -237,14 +237,14 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
               height: isMobile ? "35px" : "46px",
             }}
           >
-            {isCheckoutLoading ? "Loading..." : spotsRemaining === 0 ? "Sold out" : "join the program"}
+            {isCheckoutLoading ? "Loading..." : spotsRemaining === 0 ? "sold out" : "be an early bird"}
           </button>
 
           <p
             className="text-center text-black font-medium mt-4"
             style={{ fontSize: isMobile ? "14px" : "16px" }}
           >
-            {spotsRemaining !== undefined ? `${spotsRemaining}/100 spots left` : "Loading..."}
+100 spots available for first batch
           </p>
         </div>
       </div>

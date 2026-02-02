@@ -129,7 +129,7 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
 
         {/* More coming card */}
         <div
-          className="bg-white flex items-center justify-center"
+          className="bg-white/40 flex items-center justify-center"
           style={{
             borderRadius: isMobile ? "10px" : "20px",
             gridColumn: isMobile ? "1 / 3" : "3",
@@ -137,7 +137,7 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
           }}
         >
           <p
-            className="font-semibold text-black text-center whitespace-pre-wrap"
+            className="font-semibold text-black/35 text-center whitespace-pre-wrap"
             style={{ fontSize: isMobile ? "14px" : "24px" }}
           >
             {isMobile ? "more coming.." : "more\ncoming.."}

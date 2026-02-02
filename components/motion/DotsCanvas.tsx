@@ -50,6 +50,8 @@ interface SceneConfig {
   snapRadiusPx: number;
   snapSpeedPxPerSec: number;
   morphSpeedMult: number;
+  colorGray?: string;
+  colorAccent?: string;
 }
 
 type SceneConfigInput = Omit<SceneConfig, "order">;
@@ -405,6 +407,9 @@ export default function DotsCanvas({
   // Eliminates ~72,000 string allocations per second
   const colorLUTRef = useRef<string[]>([]);
 
+  // Per-scene color LUT cache (keyed by sceneId)
+  const sceneColorLUTCacheRef = useRef<Map<string, { gray: string; accent: string; lut: string[] }>>(new Map());
+
   // State
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [scenesVersion, setScenesVersion] = useState(0);
@@ -556,7 +561,9 @@ export default function DotsCanvas({
       prev.settleRadiusPx === config.settleRadiusPx &&
       prev.snapRadiusPx === config.snapRadiusPx &&
       prev.snapSpeedPxPerSec === config.snapSpeedPxPerSec &&
-      prev.morphSpeedMult === config.morphSpeedMult;
+      prev.morphSpeedMult === config.morphSpeedMult &&
+      prev.colorGray === config.colorGray &&
+      prev.colorAccent === config.colorAccent;
 
     if (fieldsEqual) {
       return;
@@ -1683,6 +1690,39 @@ export default function DotsCanvas({
   // Draw
   // -------------------------------------------------------------------------
 
+  // Helper to get or build a color LUT for a scene
+  const getSceneColorLUT = useCallback((scene: SceneConfig | null): string[] => {
+    // If no scene or no per-scene colors, use global LUT
+    if (!scene || (!scene.colorGray && !scene.colorAccent)) {
+      return colorLUTRef.current;
+    }
+
+    const sceneGray = scene.colorGray ?? "";
+    const sceneAccent = scene.colorAccent ?? "";
+
+    // Check cache
+    const cached = sceneColorLUTCacheRef.current.get(scene.id);
+    if (cached && cached.gray === sceneGray && cached.accent === sceneAccent) {
+      return cached.lut;
+    }
+
+    // Build new LUT for this scene
+    const gray = scene.colorGray ? hexToRgb(scene.colorGray) : grayRgbRef.current;
+    const accent = scene.colorAccent ? hexToRgb(scene.colorAccent) : accentRgbRef.current;
+    const lut: string[] = new Array(256);
+    for (let i = 0; i < 256; i++) {
+      const t = i / 255;
+      const r = Math.round(lerp(gray.r, accent.r, t));
+      const g = Math.round(lerp(gray.g, accent.g, t));
+      const b = Math.round(lerp(gray.b, accent.b, t));
+      lut[i] = `rgb(${r},${g},${b})`;
+    }
+
+    // Cache it
+    sceneColorLUTCacheRef.current.set(scene.id, { gray: sceneGray, accent: sceneAccent, lut });
+    return lut;
+  }, []);
+
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = ctxRef.current;
@@ -1715,6 +1755,9 @@ export default function DotsCanvas({
       (activeScene?.lockInMs ?? 0) > 0 &&
       performance.now() < lockUntilRef.current;
 
+    // Get the color LUT for the active scene (uses per-scene colors if defined)
+    const colorLUT = getSceneColorLUT(activeScene);
+
     let swayMultiplier = 1;
     if (phase === "initial") {
       swayMultiplier = 0;
@@ -1744,7 +1787,6 @@ export default function DotsCanvas({
       const easedT = easeOut(1 - t);
 
       // Use pre-computed color LUT to avoid string allocation
-      const colorLUT = colorLUTRef.current;
       if (colorLUT.length > 0) {
         const lutIndex = Math.round(easedT * 255);
         ctx.fillStyle = colorLUT[lutIndex];
@@ -1810,7 +1852,7 @@ export default function DotsCanvas({
         ctx.fill();
       }
     }
-  }, []);
+  }, [getSceneColorLUT]);
 
   const drawReducedMotion = useCallback(() => {
     const canvas = canvasRef.current;

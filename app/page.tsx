@@ -22,8 +22,8 @@ export default function Home() {
     >
       <main>
         <Hook />
-        <Problem />
         <Approach />
+        <Problem />
         <DosDonts />
         <Vision />
         <Footer />

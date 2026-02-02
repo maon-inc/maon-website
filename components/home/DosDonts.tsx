@@ -57,7 +57,7 @@ export default function DosDonts() {
           {DOS_DONTS.doSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-white py-6 md:pt-10 md:pb-0"
+              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-[#1b1b1b] py-6 md:pt-10 md:pb-0"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -75,7 +75,7 @@ export default function DosDonts() {
                   />
                 </div>
                 <p
-                  className="font-medium text-[#1b1b1b] text-left"
+                  className="font-medium text-white text-left"
                   style={{ fontSize: fonts.cardText }}
                 >
                   {card.text}
@@ -102,7 +102,7 @@ export default function DosDonts() {
           {DOS_DONTS.dontSection.cards.map((card, index) => (
             <div
               key={index}
-              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-[#1b1b1b] py-6 md:pt-14 md:pb-0"
+              className="flex md:aspect-[1/1.2] lg:aspect-[1/1.1] xl:aspect-[1/.7] items-center md:items-start justify-center rounded-[20px] bg-white py-6 md:pt-14 md:pb-0"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -111,7 +111,7 @@ export default function DosDonts() {
             >
               <div className="flex w-3/4 flex-col items-center md:items-start">
                 <p
-                  className="font-medium text-white text-center md:text-left"
+                  className="font-medium text-[#1b1b1b] text-center md:text-left"
                   style={{ fontSize: fonts.cardText }}
                 >
                   {card.text}
@@ -136,6 +136,8 @@ export default function DosDonts() {
       dissipate
       morphSpeedMult={2}
       stiffnessMult={2}
+      colorGray="#F7F6F5"
+      colorAccent="#B7D7A8"
       className="min-h-screen bg-[#f7f6f5] py-14"
     >
       {content}
