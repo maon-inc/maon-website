@@ -240,12 +240,14 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
             {isCheckoutLoading ? "Loading..." : spotsRemaining === 0 ? "sold out" : "be an early bird"}
           </button>
 
-          <p
-            className="text-center text-black font-medium mt-4"
-            style={{ fontSize: isMobile ? "14px" : "16px" }}
-          >
-100 spots available for first batch
-          </p>
+{spotsRemaining !== undefined && spotsRemaining <= 75 && (
+            <p
+              className="text-center text-black font-medium mt-4"
+              style={{ fontSize: isMobile ? "14px" : "16px" }}
+            >
+              {spotsRemaining} spots available for first batch
+            </p>
+          )}
         </div>
       </div>
     </div>
