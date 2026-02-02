@@ -158,7 +158,7 @@ export const PROBLEM = {
 // ============================================
 
 export const APPROACH = {
-  label: "approach",
+  label: "product",
   headline:
     "We use data from your smart devices to give you a new perspective on your mental health.",
   cards: [

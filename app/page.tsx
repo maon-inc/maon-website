@@ -1,6 +1,6 @@
 import Hook from "@/components/home/Hook";
 import Problem from "@/components/home/Problem";
-import Approach from "@/components/home/Approach";
+import Product from "@/components/home/Product";
 import Vision from "@/components/home/Vision";
 import DosDonts from "@/components/home/DosDonts";
 import Footer from "@/components/ui/Footer";
@@ -23,7 +23,7 @@ export default function Home() {
     >
       <main>
         <Hook />
-        <Approach />
+        <Product />
         <Problem />
         <DosDonts />
         <Vision />

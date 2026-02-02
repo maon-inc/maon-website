@@ -35,7 +35,7 @@ const COLUMN_2_CARDS = [
 
 // Responsive sizing for Pinterest grid
 const CARD_SIZES = {
-  mobile: { cardWidth: 160, cardHeight: 104, gap: 16, maskRadius: 100 },
+  mobile: { cardWidth: 140, cardHeight: 91, gap: 14, maskRadius: 90 },
   md: { cardWidth: 200, cardHeight: 130, gap: 20, maskRadius: 130 },
   lg: { cardWidth: 240, cardHeight: 156, gap: 24, maskRadius: 160 },
   xl: { cardWidth: 280, cardHeight: 182, gap: 28, maskRadius: 180 },
@@ -123,7 +123,7 @@ export default function Hook() {
 
   // Calculate animation values
   const colHeight = (cardSize.cardHeight + cardSize.gap) * COLUMN_1_CARDS.length;
-  const containerHeight = breakpoint === "xl" ? 500 : breakpoint === "lg" ? 420 : breakpoint === "md" ? 340 : 280;
+  const containerHeight = breakpoint === "xl" ? 500 : breakpoint === "lg" ? 420 : breakpoint === "md" ? 340 : 240;
 
   // Pinterest-style scrolling cards with hover reveal
   const pinterestCards = (
@@ -303,7 +303,7 @@ export default function Hook() {
         alt="Dashboard metrics"
         width={600}
         height={400}
-        className="w-[220px] md:w-[260px] lg:w-[320px] xl:w-[350px] h-auto"
+        className="w-[190px] md:w-[260px] lg:w-[320px] xl:w-[350px] h-auto"
         style={{
           opacity: isVisible ? 1 : 0,
           transition: "opacity 0.8s ease-out 0.2s",
