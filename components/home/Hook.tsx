@@ -9,31 +9,39 @@ import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
 
-/*
-// COMMENTED OUT: Card images split into two columns for Pinterest-style layout
+// Column 1 cards - in order
 const COLUMN_1_CARDS = [
-  { src: "/assets/hook/1.svg", alt: "Stress metrics", width: 302, height: 195 },
-  { src: "/assets/hook/3.svg", alt: "Mood metrics", width: 301, height: 195 },
-  { src: "/assets/hook/5.svg", alt: "Activity metrics", width: 301, height: 195 },
-  { src: "/assets/hook/7.svg", alt: "Interventions metrics", width: 301, height: 195 },
+  { src: "/assets/hook/1.svg", alt: "Stress metrics" },
+  { src: "/assets/hook/2.svg", alt: "Sleep metrics" },
+  { src: "/assets/hook/3.svg", alt: "Mood metrics" },
+  { src: "/assets/hook/4.svg", alt: "Screentime metrics" },
+  { src: "/assets/hook/5.svg", alt: "Activity metrics" },
+  { src: "/assets/hook/6.svg", alt: "Device selection" },
+  { src: "/assets/hook/7.svg", alt: "Interventions metrics" },
+  { src: "/assets/hook/8.svg", alt: "Calendar" },
 ];
 
+// Column 2 cards - different order (offset by 4, creating interleaved feel)
 const COLUMN_2_CARDS = [
-  { src: "/assets/hook/2.svg", alt: "Sleep metrics", width: 302, height: 195 },
-  { src: "/assets/hook/4.svg", alt: "Screentime metrics", width: 302, height: 195 },
-  { src: "/assets/hook/6.svg", alt: "Device selection", width: 300, height: 190 },
-  { src: "/assets/hook/8.svg", alt: "Calendar", width: 301, height: 195 },
+  { src: "/assets/hook/5.svg", alt: "Activity metrics" },
+  { src: "/assets/hook/6.svg", alt: "Device selection" },
+  { src: "/assets/hook/7.svg", alt: "Interventions metrics" },
+  { src: "/assets/hook/8.svg", alt: "Calendar" },
+  { src: "/assets/hook/1.svg", alt: "Stress metrics" },
+  { src: "/assets/hook/2.svg", alt: "Sleep metrics" },
+  { src: "/assets/hook/3.svg", alt: "Mood metrics" },
+  { src: "/assets/hook/4.svg", alt: "Screentime metrics" },
 ];
 
-// Card dimensions for different breakpoints
-const SIZES = {
-  mobile: { cardWidth: 140, cardHeight: 95, gap: 10, columnGap: 10, visibleHeight: 220, offset: -30 },
-  md: { cardWidth: 160, cardHeight: 110, gap: 12, columnGap: 12, visibleHeight: 280, offset: -40 },
-  lg: { cardWidth: 200, cardHeight: 140, gap: 14, columnGap: 14, visibleHeight: 340, offset: -50 },
-  xl: { cardWidth: 260, cardHeight: 180, gap: 16, columnGap: 16, visibleHeight: 420, offset: -60 },
+// Responsive sizing for Pinterest grid
+const CARD_SIZES = {
+  mobile: { cardWidth: 160, cardHeight: 104, gap: 16, maskRadius: 100 },
+  md: { cardWidth: 200, cardHeight: 130, gap: 20, maskRadius: 130 },
+  lg: { cardWidth: 240, cardHeight: 156, gap: 24, maskRadius: 160 },
+  xl: { cardWidth: 280, cardHeight: 182, gap: 28, maskRadius: 180 },
 };
 
-type SizeKey = keyof typeof SIZES;
+type SizeKey = keyof typeof CARD_SIZES;
 
 function useBreakpoint(): SizeKey {
   const [breakpoint, setBreakpoint] = useState<SizeKey>("mobile");
@@ -55,51 +63,20 @@ function useBreakpoint(): SizeKey {
   return breakpoint;
 }
 
-// Render cards column
-const renderColumn = (cards: typeof COLUMN_1_CARDS, animationName: string, duration: string, size: typeof SIZES.mobile, isVisible: boolean) => (
-  <div
-    className="flex flex-col"
-    style={{
-      gap: size.gap,
-      animation: isVisible ? `${animationName} ${duration} linear infinite` : "none",
-    }}
-  >
-    {cards.map((card) => (
-      <div key={card.src} className="flex-shrink-0">
-        <Image
-          src={card.src}
-          alt={card.alt}
-          width={card.width}
-          height={card.height}
-          style={{ width: size.cardWidth, height: size.cardHeight }}
-          className="object-contain"
-        />
-      </div>
-    ))}
-    {cards.map((card) => (
-      <div key={`${card.src}-dup`} className="flex-shrink-0">
-        <Image
-          src={card.src}
-          alt={card.alt}
-          width={card.width}
-          height={card.height}
-          style={{ width: size.cardWidth, height: size.cardHeight }}
-          className="object-contain"
-        />
-      </div>
-    ))}
-  </div>
-);
-*/
-
 export default function Hook() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const mobileSectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const revealContainerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // pixels
+  const [isHovering, setIsHovering] = useState(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
   const { setIsHookPassed } = useScrollContext();
+  const breakpoint = useBreakpoint();
+  const cardSize = CARD_SIZES[breakpoint];
+
 
   useEffect(() => {
     const el = isMobile ? mobileSectionRef.current : sectionRef.current;
@@ -130,7 +107,175 @@ export default function Hook() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [setIsHookPassed]);
 
-  // Static main.svg component replacing the scrolling cards
+  // Handle mouse move for reveal effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = revealContainerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePos({ x, y });
+  };
+
+  // Calculate animation values
+  const colHeight = (cardSize.cardHeight + cardSize.gap) * COLUMN_1_CARDS.length;
+  const containerHeight = breakpoint === "xl" ? 500 : breakpoint === "lg" ? 420 : breakpoint === "md" ? 340 : 280;
+
+  // Pinterest-style scrolling cards with hover reveal
+  const pinterestCards = (
+    <div
+      ref={revealContainerRef}
+      className="relative overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      style={{
+        width: cardSize.cardWidth * 2 + cardSize.gap,
+        height: containerHeight,
+        cursor: "crosshair",
+      }}
+    >
+      {/* Fade overlays */}
+      <div
+        className="absolute left-0 right-0 top-0 h-12 z-20 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, #f7f6f5 0%, transparent 100%)" }}
+      />
+      <div
+        className="absolute left-0 right-0 bottom-0 h-12 z-20 pointer-events-none"
+        style={{ background: "linear-gradient(to top, #f7f6f5 0%, transparent 100%)" }}
+      />
+
+      {/* Cards container with mask reveal */}
+      <div
+        className="flex"
+        style={{
+          gap: cardSize.gap,
+          // Low opacity by default, full opacity revealed through mask on hover
+          opacity: isVisible ? 0.15 : 0,
+          transition: "opacity 1.5s ease-out 0.3s",
+        }}
+      >
+        {/* Column 1 - scrolls down */}
+        <div
+          className="flex flex-col"
+          style={{
+            gap: cardSize.gap,
+            width: cardSize.cardWidth,
+            animation: isVisible ? "scrollDown 45s linear infinite" : "none",
+          }}
+        >
+          {[...COLUMN_1_CARDS, ...COLUMN_1_CARDS].map((card, i) => (
+            <div key={`${card.src}-${i}`} className="flex-shrink-0">
+              <Image
+                src={card.src}
+                alt={card.alt}
+                width={292}
+                height={183}
+                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Column 2 - scrolls up */}
+        <div
+          className="flex flex-col"
+          style={{
+            gap: cardSize.gap,
+            width: cardSize.cardWidth,
+            marginTop: -(cardSize.cardHeight / 2),
+            animation: isVisible ? "scrollUp 40s linear infinite" : "none",
+          }}
+        >
+          {[...COLUMN_2_CARDS, ...COLUMN_2_CARDS].map((card, i) => (
+            <div key={`${card.src}-${i}`} className="flex-shrink-0">
+              <Image
+                src={card.src}
+                alt={card.alt}
+                width={292}
+                height={183}
+                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Reveal layer - shows cards at full opacity where mouse hovers */}
+      <div
+        className="absolute inset-0 flex overflow-hidden pointer-events-none"
+        style={{
+          gap: cardSize.gap,
+          opacity: isVisible && isHovering ? 1 : 0,
+          transition: isHovering ? "none" : "opacity 0.3s ease-out",
+          WebkitMaskImage: `radial-gradient(circle ${cardSize.maskRadius}px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 100%)`,
+          maskImage: `radial-gradient(circle ${cardSize.maskRadius}px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 100%)`,
+        }}
+      >
+        {/* Duplicated columns for reveal layer */}
+        <div
+          className="flex flex-col"
+          style={{
+            gap: cardSize.gap,
+            width: cardSize.cardWidth,
+            animation: isVisible ? "scrollDown 45s linear infinite" : "none",
+          }}
+        >
+          {[...COLUMN_1_CARDS, ...COLUMN_1_CARDS].map((card, i) => (
+            <div key={`reveal-${card.src}-${i}`} className="flex-shrink-0">
+              <Image
+                src={card.src}
+                alt={card.alt}
+                width={292}
+                height={183}
+                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <div
+          className="flex flex-col"
+          style={{
+            gap: cardSize.gap,
+            width: cardSize.cardWidth,
+            marginTop: -(cardSize.cardHeight / 2),
+            animation: isVisible ? "scrollUp 40s linear infinite" : "none",
+          }}
+        >
+          {[...COLUMN_2_CARDS, ...COLUMN_2_CARDS].map((card, i) => (
+            <div key={`reveal-${card.src}-${i}`} className="flex-shrink-0">
+              <Image
+                src={card.src}
+                alt={card.alt}
+                width={292}
+                height={183}
+                style={{ width: cardSize.cardWidth, height: cardSize.cardHeight }}
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Keyframe animations */}
+      <style jsx>{`
+        @keyframes scrollDown {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-${colHeight}px); }
+        }
+        @keyframes scrollUp {
+          0% { transform: translateY(-${colHeight}px); }
+          100% { transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+
+  // Main image component (separate, unaffected by hover)
   const mainImageComponent = (
     <Image
       src="/assets/hook/main.svg"
@@ -145,65 +290,6 @@ export default function Hook() {
     />
   );
 
-  /*
-  // COMMENTED OUT: Original cardsComponent with scrolling columns
-  const cardsComponent = (
-    <div
-      className="flex overflow-hidden"
-      style={{
-        height: size.visibleHeight,
-        width: size.cardWidth * 2 + size.columnGap,
-        gap: size.columnGap,
-        opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.8s ease-out 0.2s",
-      }}
-    >
-      <div
-        className="absolute left-0 right-0 top-0 h-12 md:h-16 z-10 pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, rgba(247,246,245,1) 0%, rgba(247,246,245,0) 100%)",
-        }}
-      />
-      <div
-        className="absolute left-0 right-0 bottom-0 h-12 md:h-16 z-10 pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, rgba(247,246,245,1) 0%, rgba(247,246,245,0) 100%)",
-        }}
-      />
-
-      <div className="flex flex-col" style={{ gap: size.gap, width: size.cardWidth }}>
-        {renderColumn(COLUMN_1_CARDS, "scrollDown", "16s", size, isVisible)}
-      </div>
-
-      <div
-        className="flex flex-col"
-        style={{ gap: size.gap, width: size.cardWidth, marginTop: size.offset }}
-      >
-        {renderColumn(COLUMN_2_CARDS, "scrollUp", "14s", size, isVisible)}
-      </div>
-
-      <style jsx>{\`
-        @keyframes scrollDown {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(calc(-\${(size.cardHeight + size.gap) * COLUMN_1_CARDS.length}px));
-          }
-        }
-        @keyframes scrollUp {
-          0% {
-            transform: translateY(calc(-\${(size.cardHeight + size.gap) * COLUMN_2_CARDS.length}px));
-          }
-          100% {
-            transform: translateY(0);
-          }
-        }
-      \`}</style>
-    </div>
-  );
-  */
-
   return (
     <div ref={containerRef}>
       <DotsScene
@@ -212,18 +298,29 @@ export default function Hook() {
         stiffnessMult={2}
         className="relative min-h-screen bg-[#f7f6f5]"
       >
-      {/* Mobile layout: image above, text below */}
+      {/* Mobile layout: main image + text, cards in background */}
       <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 pt-16">
-        {/* Image - centered above text on mobile */}
-        <div
-          className="relative mb-8"
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s",
-          }}
-        >
-          {mainImageComponent}
+        {/* Cards + Main image container - centered */}
+        <div className="relative mb-8">
+          {/* Pinterest cards - background */}
+          <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
+            {pinterestCards}
+          </div>
+
+          {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
+          <div
+            className="relative flex items-center justify-center pointer-events-none"
+            style={{
+              width: cardSize.cardWidth * 2 + cardSize.gap,
+              height: containerHeight,
+              zIndex: 10,
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0)" : "translateY(40px)",
+              transition: "opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s",
+            }}
+          >
+            {mainImageComponent}
+          </div>
         </div>
 
         {/* Text content - below image on mobile */}
@@ -333,39 +430,33 @@ export default function Hook() {
         </Link>
       </div>
 
-      {/* Main image - right side (tablet and desktop) */}
+      {/* Cards + Main image container - right side (tablet and desktop) */}
       <div
-        className="hidden md:flex absolute right-6 lg:right-10 xl:right-32 top-1/2 items-center justify-center"
+        className="hidden md:flex absolute top-1/2 md:right-[5%] lg:right-[8%] xl:right-[10%] items-center justify-center"
         style={{
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(-50%)" : "translateY(calc(-50% + 40px))",
-          transition: "opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s",
+          transform: "translateY(-50%)",
         }}
       >
-        {mainImageComponent}
-      </div>
+        {/* Pinterest cards - background */}
+        <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
+          {pinterestCards}
+        </div>
 
-      {/*
-      // COMMENTED OUT: Keyframe animations for Pinterest-style scrolling
-      <style jsx>{\`
-        @keyframes scrollDown {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(calc(-\${(size.cardHeight + size.gap) * COLUMN_1_CARDS.length}px));
-          }
-        }
-        @keyframes scrollUp {
-          0% {
-            transform: translateY(calc(-\${(size.cardHeight + size.gap) * COLUMN_2_CARDS.length}px));
-          }
-          100% {
-            transform: translateY(0);
-          }
-        }
-      \`}</style>
-      */}
+        {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
+        <div
+          className="relative flex items-center justify-center pointer-events-none"
+          style={{
+            width: cardSize.cardWidth * 2 + cardSize.gap,
+            height: containerHeight,
+            zIndex: 10,
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateY(0)" : "translateY(40px)",
+            transition: "opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s",
+          }}
+        >
+          {mainImageComponent}
+        </div>
+      </div>
     </DotsScene>
     </div>
   );
