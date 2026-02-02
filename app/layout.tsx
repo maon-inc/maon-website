@@ -4,6 +4,7 @@ import Nav from "@/components/ui/Nav";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { PostHogPageView } from "@/components/providers/PostHogPageView";
+import { ScrollProvider } from "@/components/providers/ScrollProvider";
 
 export const metadata: Metadata = {
   title: "AI Mental Health Assistant",
@@ -26,10 +27,12 @@ export default function RootLayout({
       <body className="antialiased">
         <PostHogProvider>
           <PostHogPageView />
-          <ConvexClientProvider>
-            <Nav />
-            {children}
-          </ConvexClientProvider>
+          <ScrollProvider>
+            <ConvexClientProvider>
+              <Nav />
+              {children}
+            </ConvexClientProvider>
+          </ScrollProvider>
         </PostHogProvider>
       </body>
     </html>
