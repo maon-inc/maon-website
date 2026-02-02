@@ -71,6 +71,9 @@ export default function Hook() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // pixels
   const [isHovering, setIsHovering] = useState(false);
+  const [isRecommendClicked, setIsRecommendClicked] = useState(false);
+  const [isCard1Clicked, setIsCard1Clicked] = useState(false);
+  const [isCard2Clicked, setIsCard2Clicked] = useState(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
   const { setIsHookPassed } = useScrollContext();
@@ -151,9 +154,9 @@ export default function Hook() {
         className="flex"
         style={{
           gap: cardSize.gap,
-          // Low opacity by default, full opacity revealed through mask on hover
-          opacity: isVisible ? 0.15 : 0,
-          transition: "opacity 1.5s ease-out 0.3s",
+          // Low opacity by default, higher when either card clicked or hovering
+          opacity: isVisible ? (isCard1Clicked || isCard2Clicked ? 0.6 : 0.15) : 0,
+          transition: "opacity 0.5s ease-out",
         }}
       >
         {/* Column 1 - scrolls down */}
@@ -275,19 +278,66 @@ export default function Hook() {
     </div>
   );
 
-  // Main image component (separate, unaffected by hover)
+  // Main image component with clickable "recommend providers" overlay
+  // SVG viewBox is 436x720, button is at x=105.479, y=495, w=223, h=36
   const mainImageComponent = (
-    <Image
-      src="/assets/hook/main.svg"
-      alt="Dashboard metrics"
-      width={600}
-      height={400}
-      className="w-[220px] md:w-[260px] lg:w-[320px] xl:w-[350px] h-auto"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.8s ease-out 0.2s",
-      }}
-    />
+    <div className="relative pointer-events-auto">
+      <Image
+        src="/assets/hook/main.svg"
+        alt="Dashboard metrics"
+        width={600}
+        height={400}
+        className="w-[220px] md:w-[260px] lg:w-[320px] xl:w-[350px] h-auto"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transition: "opacity 0.8s ease-out 0.2s",
+        }}
+      />
+      {/* Clickable overlay for "recommend providers" button */}
+      <button
+        onClick={() => setIsRecommendClicked(!isRecommendClicked)}
+        className="absolute cursor-pointer transition-all rounded-full z-10"
+        style={{
+          // Position as percentage of SVG viewBox (436x720)
+          left: "24.2%",
+          top: "68.75%",
+          width: "51.1%",
+          height: "5%",
+          backgroundColor: isRecommendClicked ? "rgba(247, 246, 245, 0.6)" : "transparent",
+        }}
+        aria-label="Recommend providers"
+      />
+      {/* Clickable overlay for trends chart (first card with 3-bar chart) */}
+      <button
+        onClick={() => setIsCard1Clicked(!isCard1Clicked)}
+        className="absolute cursor-pointer transition-all rounded-2xl"
+        style={{
+          // Position as percentage of SVG viewBox (436x720)
+          // First card: x=90.5, y=132.5, w=248.327, h=154.937
+          left: "20.8%",
+          top: "18.4%",
+          width: "57%",
+          height: "21.5%",
+          backgroundColor: isCard1Clicked ? "rgba(183, 215, 168, 0.15)" : "transparent",
+        }}
+        aria-label="View trends"
+      />
+      {/* Clickable overlay for second card (below first card) */}
+      <button
+        onClick={() => setIsCard2Clicked(!isCard2Clicked)}
+        className="absolute cursor-pointer transition-all rounded-2xl"
+        style={{
+          // Position as percentage of SVG viewBox (436x720)
+          // Second card: x=90.9788, y=316.5, w=247, h=223
+          left: "20.9%",
+          top: "44%",
+          width: "56.7%",
+          height: "31%",
+          backgroundColor: isCard2Clicked ? "rgba(183, 215, 168, 0.15)" : "transparent",
+        }}
+        aria-label="View metrics"
+      />
+    </div>
   );
 
   return (
@@ -299,9 +349,9 @@ export default function Hook() {
         className="relative min-h-screen bg-[#f7f6f5]"
       >
       {/* Mobile layout: main image + text, cards in background */}
-      <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 pt-16">
+      <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
         {/* Cards + Main image container - centered */}
-        <div className="relative mb-8">
+        <div className="relative mb-4">
           {/* Pinterest cards - background */}
           <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
             {pinterestCards}

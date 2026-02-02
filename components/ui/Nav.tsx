@@ -14,7 +14,13 @@ export default function Nav() {
         {/* Logo with hover tooltip */}
         <div className="group relative">
           <Link href="/">
-            <Image src="/logo.svg" alt={SITE.name} width={100} height={32} />
+            <Image
+              src="/logo.svg"
+              alt={SITE.name}
+              width={100}
+              height={32}
+              className="w-[75px] md:w-[100px] h-auto"
+            />
           </Link>
 
           {/* Tooltip */}
