@@ -7,9 +7,11 @@ import { useEffect } from 'react'
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+      defaults: '2025-11-30',
       person_profiles: 'identified_only',
-      capture_pageview: false, // We'll capture manually for SPA navigation
+      capture_pageview: 'history_change',
+      capture_pageleave: 'if_capture_pageview',
     })
   }, [])
 

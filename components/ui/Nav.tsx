@@ -4,9 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { NAV, SITE, FONT_SIZES, FONTS, COLORS } from "@/lib/constants";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
+import { usePostHog } from "posthog-js/react";
 
 export default function Nav() {
   const { isHookPassed } = useScrollContext();
+  const posthog = usePostHog();
+
+  const handleWaitlistClick = () => {
+    posthog?.capture("waitlist_cta_click", { location: "nav_fixed" });
+  };
   return (
     <>
       {/* Logo nav - absolute positioned */}
@@ -56,6 +62,7 @@ export default function Nav() {
       {/* Fixed waitlist button - appears after Hook section */}
       <Link
         href={NAV.cta.href}
+        onClick={handleWaitlistClick}
         className="fixed top-6 right-6 md:right-20 z-50 hidden md:inline-flex w-fit items-center justify-center gap-1.5 px-3 py-1.5 font-medium text-[#1b1b1b] hover:opacity-90"
         style={{
           fontSize: FONT_SIZES.navLink,

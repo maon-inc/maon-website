@@ -3,7 +3,7 @@ import "./globals.css";
 import Nav from "@/components/ui/Nav";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
-import { PostHogPageView } from "@/components/providers/PostHogPageView";
+import { PostHogEarlyBirdCancel } from "@/components/providers/PostHogEarlyBirdCancel";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <PostHogProvider>
-          <PostHogPageView />
+          <PostHogEarlyBirdCancel />
           <ScrollProvider>
             <ConvexClientProvider>
               <Nav />

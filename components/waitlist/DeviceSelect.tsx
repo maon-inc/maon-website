@@ -8,6 +8,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { getGeoLocation, GeoLocation } from "@/lib/geolocation";
 import { observeIntersection } from "@/motion/observe";
+import { usePostHog } from "posthog-js/react";
 
 const DEVICES = [
   { name: "Apple Watch", icon: "/waitlist/apple.svg" },
@@ -26,6 +27,7 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
   const [isVisible, setIsVisible] = useState(false);
   const createWaitlistEntry = useMutation(api.waitlist.create);
   const [geoLocation, setGeoLocation] = useState<GeoLocation | null>(null);
+  const posthog = usePostHog();
 
   useEffect(() => {
     getGeoLocation().then(setGeoLocation);
@@ -56,10 +58,20 @@ export default function DeviceSelect({ onDeviceSelect }: DeviceSelectProps) {
       country: geo.country,
       region: geo.region,
     });
+
+    posthog?.capture("device_selected", {
+      device: deviceName,
+      country: geo.country,
+      region: geo.region,
+    });
     onDeviceSelect?.(id, deviceName);
   };
 
   const handleSkip = () => {
+    posthog?.capture("device_select_skipped", {
+      country: geoLocation?.country,
+      region: geoLocation?.region,
+    });
     onDeviceSelect?.(undefined as unknown as Id<"waitlist">, undefined);
   };
 

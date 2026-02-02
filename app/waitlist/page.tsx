@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Footer from "@/components/ui/Footer";
 import { Id } from "@/convex/_generated/dataModel";
+import { usePostHog } from "posthog-js/react";
 
 // Dynamically import components that use Convex hooks to prevent SSR issues
 const DeviceSelect = dynamic(() => import("@/components/waitlist/DeviceSelect"), {
@@ -25,6 +26,8 @@ const WaitlistForm = dynamic(() => import("@/components/waitlist/WaitlistForm"),
 export default function WaitlistPage() {
   const [waitlistId, setWaitlistId] = useState<Id<"waitlist"> | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const posthog = usePostHog();
+  const capturedStepsRef = useRef({ device: false, form: false });
 
   const handleDeviceSelect = (id: Id<"waitlist"> | undefined) => {
     if (id) {
@@ -32,6 +35,24 @@ export default function WaitlistPage() {
     }
     setShowForm(true);
   };
+
+  useEffect(() => {
+    if (!posthog) return;
+
+    if (showForm && !capturedStepsRef.current.form) {
+      posthog.capture("waitlist_step_viewed", {
+        step: "form",
+        waitlist_id: waitlistId ?? undefined,
+      });
+      capturedStepsRef.current.form = true;
+      return;
+    }
+
+    if (!showForm && !capturedStepsRef.current.device) {
+      posthog.capture("waitlist_step_viewed", { step: "device_select" });
+      capturedStepsRef.current.device = true;
+    }
+  }, [showForm, waitlistId, posthog]);
 
   return (
     <div className="min-h-screen bg-[#f7f6f5] flex flex-col">

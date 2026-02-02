@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { DOS_DONTS, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
@@ -12,6 +12,47 @@ export default function DosDonts() {
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
+
+  const doCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const dontCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [doCardHeight, setDoCardHeight] = useState<number | undefined>(undefined);
+  const [dontCardHeight, setDontCardHeight] = useState<number | undefined>(undefined);
+
+  const syncCardHeights = useCallback(() => {
+    if (!isMobile) {
+      setDoCardHeight(undefined);
+      setDontCardHeight(undefined);
+      return;
+    }
+
+    // Measure "do" cards
+    const doHeights = doCardsRef.current
+      .filter((el): el is HTMLDivElement => el !== null)
+      .map((el) => {
+        el.style.height = "auto";
+        return el.scrollHeight;
+      });
+    if (doHeights.length > 0) {
+      setDoCardHeight(Math.max(...doHeights));
+    }
+
+    // Measure "don't" cards
+    const dontHeights = dontCardsRef.current
+      .filter((el): el is HTMLDivElement => el !== null)
+      .map((el) => {
+        el.style.height = "auto";
+        return el.scrollHeight;
+      });
+    if (dontHeights.length > 0) {
+      setDontCardHeight(Math.max(...dontHeights));
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    syncCardHeights();
+    window.addEventListener("resize", syncCardHeights);
+    return () => window.removeEventListener("resize", syncCardHeights);
+  }, [syncCardHeights]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -57,11 +98,13 @@ export default function DosDonts() {
           {DOS_DONTS.doSection.cards.map((card, index) => (
             <div
               key={index}
+              ref={(el) => { doCardsRef.current[index] = el; }}
               className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-[#1b1b1b] px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-10 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.3 + index * 0.1}s, transform 0.8s ease-out ${0.3 + index * 0.1}s`,
+                ...(isMobile && doCardHeight ? { height: doCardHeight } : {}),
               }}
             >
               <div className="flex w-full max-w-[320px] flex-row items-center justify-start gap-6 md:w-3/4 md:max-w-none md:flex-col md:items-start">

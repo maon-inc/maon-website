@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Footer from "@/components/ui/Footer";
 import { FONTS } from "@/lib/constants";
+import { PostHogSuccess } from "@/components/providers/PostHogSuccess";
 
 export const metadata = {
   title: "Thank You | MAON",
@@ -10,6 +11,7 @@ export const metadata = {
 export default function Success() {
   return (
     <main className="min-h-screen bg-[#f7f6f5] text-[#1b1b1b] flex flex-col">
+      <PostHogSuccess />
       {/* Content */}
       <div className="flex-1 flex items-center justify-center px-6 py-24">
         <div

@@ -7,6 +7,7 @@ import { useMutation, useQuery, useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { observeIntersection } from "@/motion/observe";
+import { usePostHog } from "posthog-js/react";
 
 interface WaitlistFormProps {
   waitlistId: Id<"waitlist"> | null;
@@ -25,6 +26,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const posthog = usePostHog();
 
   const createWaitlistEntry = useMutation(api.waitlist.create);
   const addEmail = useMutation(api.waitlist.addEmail);
@@ -49,6 +51,12 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
     return emailRegex.test(email);
   };
 
+  const getEmailDomain = (value: string) => {
+    const atIndex = value.lastIndexOf("@");
+    if (atIndex === -1) return undefined;
+    return value.slice(atIndex + 1).toLowerCase();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedEmail = email.trim();
@@ -57,6 +65,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
 
     if (!isValidEmail(trimmedEmail)) {
       setError("Please enter a valid email address.");
+      posthog?.capture("waitlist_error", { reason: "invalid_email" });
       return;
     }
 
@@ -70,12 +79,25 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
       }
       await addEmail({ id, email: trimmedEmail });
       setIsSubmitted(true);
+
+      const emailDomain = getEmailDomain(trimmedEmail);
+      const distinctId = String(id);
+      posthog?.identify(distinctId, {
+        waitlist_id: distinctId,
+        email_domain: emailDomain,
+      });
+      posthog?.capture("waitlist_submitted", {
+        waitlist_id: distinctId,
+        email_domain: emailDomain,
+      });
     } catch (err) {
       const message = err instanceof Error ? err.message : "";
       if (message.includes("already on the waitlist")) {
         setError("You're already on the waitlist!");
+        posthog?.capture("waitlist_error", { reason: "already_on_waitlist" });
       } else {
         setError("Something went wrong. Please try again.");
+        posthog?.capture("waitlist_error", { reason: "submit_failed" });
       }
     } finally {
       setIsSubmitting(false);
@@ -85,6 +107,10 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
   const handleEarlyBirdCheckout = async () => {
     setIsCheckoutLoading(true);
     try {
+      posthog?.capture("early_bird_checkout_started", {
+        waitlist_id: waitlistId ?? undefined,
+        spots_remaining: spotsRemaining ?? undefined,
+      });
       const { url } = await createEarlyBirdCheckout({
         waitlistId: waitlistId ?? undefined,
       });
@@ -94,6 +120,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
     } catch (err) {
       console.error("Checkout error:", err);
       setError("Failed to start checkout. Please try again.");
+      posthog?.capture("early_bird_checkout_failed", { reason: "checkout_failed" });
     } finally {
       setIsCheckoutLoading(false);
     }

@@ -7,12 +7,18 @@ import { VISION, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePostHog } from "posthog-js/react";
 
 export default function Vision() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
+  const posthog = usePostHog();
+
+  const handleCtaClick = () => {
+    posthog?.capture("waitlist_cta_click", { location: "vision_section" });
+  };
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -82,6 +88,7 @@ export default function Vision() {
         {/* CTA Button */}
         <Link
           href={VISION.cta.href}
+          onClick={handleCtaClick}
           className="mt-20 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
           style={{
             fontSize: "16px",
