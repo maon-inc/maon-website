@@ -145,11 +145,13 @@ export default function DosDonts() {
           {DOS_DONTS.dontSection.cards.map((card, index) => (
             <div
               key={index}
+              ref={(el) => { dontCardsRef.current[index] = el; }}
               className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-white px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-14 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.75 + index * 0.1}s, transform 0.8s ease-out ${0.75 + index * 0.1}s`,
+                ...(isMobile && dontCardHeight ? { height: dontCardHeight } : {}),
               }}
             >
               <div className="flex w-full max-w-[320px] flex-col items-center md:w-3/4 md:max-w-none md:items-start">
