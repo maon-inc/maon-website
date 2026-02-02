@@ -55,6 +55,7 @@ function useBreakpoint(): SizeKey {
 
 export default function Hook() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const mobileSectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
@@ -62,7 +63,7 @@ export default function Hook() {
   const size = SIZES[breakpoint];
 
   useEffect(() => {
-    const el = sectionRef.current;
+    const el = breakpoint === "mobile" ? mobileSectionRef.current : sectionRef.current;
     if (!el) return;
 
     return observeIntersection(
@@ -72,7 +73,7 @@ export default function Hook() {
       },
       { threshold: 0 }
     );
-  }, []);
+  }, [breakpoint]);
 
   // Render cards column
   const renderColumn = (cards: typeof COLUMN_1_CARDS, animationName: string, duration: string) => (
@@ -194,7 +195,7 @@ export default function Hook() {
         </div>
 
         {/* Text content - below cards on mobile */}
-        <div ref={sectionRef} className="text-center">
+        <div ref={mobileSectionRef} className="text-center">
           <h1
             className="font-semibold leading-tight text-[#1b1b1b]"
             style={{
@@ -248,7 +249,7 @@ export default function Hook() {
       {/* Desktop/tablet layout: text left, cards right */}
       {/* Text content - left side */}
       <div
-        ref={!isMobile ? sectionRef : undefined}
+        ref={sectionRef}
         className="hidden md:block absolute md:bottom-30 lg:bottom-55 left-0 right-0 mx-auto max-w-[80%] md:left-20 md:right-auto md:mx-0 md:max-w-[50%]"
       >
         <h1
