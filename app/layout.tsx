@@ -7,7 +7,7 @@ import { PostHogEarlyBirdCancel } from "@/components/providers/PostHogEarlyBirdC
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
 
 export const metadata: Metadata = {
-  title: "AI Mental Health Assistant",
+  title: "MAON | AI Therapist",
   description: "Maon uses your smartwatch biometrics to help you understand your mental health patterns. Get personalized insights from your Apple Watch data without diagnoses or labels.",
 };
 

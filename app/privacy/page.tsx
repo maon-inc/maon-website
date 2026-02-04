@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Introduction</h2>
             <p className="mb-4">
-              MAON Intelligence (&quot;MAON,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI mental health assistant application and related services (collectively, the &quot;Service&quot;).
+              MAON Intelligence (&quot;MAON,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI Therapist application and related services (collectively, the &quot;Service&quot;).
             </p>
             <p>
               By using MAON, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our Service.
