@@ -77,7 +77,6 @@ export default function Hook() {
   const breakpoint = useBreakpoint();
   const cardSize = CARD_SIZES[breakpoint];
 
-
   useEffect(() => {
     const el = isMobile ? mobileSectionRef.current : sectionRef.current;
     if (!el) return;
@@ -119,8 +118,16 @@ export default function Hook() {
   };
 
   // Calculate animation values
-  const colHeight = (cardSize.cardHeight + cardSize.gap) * COLUMN_1_CARDS.length;
-  const containerHeight = breakpoint === "xl" ? 500 : breakpoint === "lg" ? 420 : breakpoint === "md" ? 340 : 240;
+  const colHeight =
+    (cardSize.cardHeight + cardSize.gap) * COLUMN_1_CARDS.length;
+  const containerHeight =
+    breakpoint === "xl"
+      ? 500
+      : breakpoint === "lg"
+        ? 420
+        : breakpoint === "md"
+          ? 340
+          : 240;
 
   // Pinterest-style scrolling cards with hover reveal
   const pinterestCards = (
@@ -139,11 +146,16 @@ export default function Hook() {
       {/* Fade overlays */}
       <div
         className="absolute left-0 right-0 top-0 h-12 z-20 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, #f7f6f5 0%, transparent 100%)" }}
+        style={{
+          background:
+            "linear-gradient(to bottom, #f7f6f5 0%, transparent 100%)",
+        }}
       />
       <div
         className="absolute left-0 right-0 bottom-0 h-12 z-20 pointer-events-none"
-        style={{ background: "linear-gradient(to top, #f7f6f5 0%, transparent 100%)" }}
+        style={{
+          background: "linear-gradient(to top, #f7f6f5 0%, transparent 100%)",
+        }}
       />
 
       {/* Cards container with mask reveal */}
@@ -279,12 +291,20 @@ export default function Hook() {
       {/* Keyframe animations */}
       <style jsx>{`
         @keyframes scrollDown {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-${colHeight}px); }
+          0% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(-${colHeight}px);
+          }
         }
         @keyframes scrollUp {
-          0% { transform: translateY(-${colHeight}px); }
-          100% { transform: translateY(0); }
+          0% {
+            transform: translateY(-${colHeight}px);
+          }
+          100% {
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>
@@ -315,35 +335,97 @@ export default function Hook() {
         stiffnessMult={2}
         className="relative min-h-screen bg-[#f7f6f5]"
       >
-      {/* Mobile layout: main image + text, cards in background */}
-      <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
-        {/* Cards + Main image container - centered */}
-        <div className="relative mb-20">
-          {/* Pinterest cards - background */}
-          <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
-            {pinterestCards}
+        {/* Mobile layout: main image + text, cards in background */}
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
+          {/* Cards + Main image container - centered */}
+          <div className="relative mb-20">
+            {/* Pinterest cards - background */}
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ zIndex: 0 }}
+            >
+              {pinterestCards}
+            </div>
+
+            {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
+            <div
+              className="relative flex items-center justify-center pointer-events-none"
+              style={{
+                width: cardSize.cardWidth * 2 + cardSize.gap,
+                height: containerHeight,
+                zIndex: 10,
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                transition:
+                  "opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s",
+              }}
+            >
+              {mainImageComponent}
+            </div>
           </div>
 
-          {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
-          <div
-            className="relative flex items-center justify-center pointer-events-none"
-            style={{
-              width: cardSize.cardWidth * 2 + cardSize.gap,
-              height: containerHeight,
-              zIndex: 10,
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s",
-            }}
-          >
-            {mainImageComponent}
+          {/* Text content - below image on mobile */}
+          <div ref={mobileSectionRef} className="text-center">
+            <h1
+              className="font-semibold leading-tight text-[#1b1b1b]"
+              style={{
+                fontFamily: FONTS.serif,
+                fontSize: fonts.heroHeading,
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+              }}
+            >
+              {HOOK.headline}
+            </h1>
+
+            <p
+              className="mt-4 font-medium text-[#8d8d8d] leading-tight"
+              style={{
+                fontSize: fonts.subtitle,
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                transition:
+                  "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
+              }}
+            >
+              {HOOK.subtext}
+            </p>
+
+            <Link
+              href={HOOK.cta.href}
+              className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
+              style={{
+                fontSize: "16px",
+                border: "0.9px solid black",
+                borderRadius: "11.28px",
+                backgroundColor: "#B7D7A8",
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                transition:
+                  "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
+              }}
+            >
+              {HOOK.cta.label}
+              <Image
+                src="/assets/ui/solar_arrow-up-broken.svg"
+                alt=""
+                width={20}
+                height={20}
+                className="h-5 w-5"
+              />
+            </Link>
           </div>
         </div>
 
-        {/* Text content - below image on mobile */}
-        <div ref={mobileSectionRef} className="text-center">
+        {/* Desktop/tablet layout: text left, image right */}
+        {/* Text content - left side */}
+        <div
+          ref={sectionRef}
+          className="hidden md:block absolute md:bottom-30 lg:bottom-55 left-0 right-0 mx-auto max-w-[80%] md:left-20 md:right-auto md:mx-0 md:max-w-[50%] xl:max-w-[45%]"
+        >
           <h1
-            className="font-semibold leading-tight text-[#1b1b1b]"
+            className="font-semibold leading-tight text-[#1b1b1b] xl:max-w-[600px]"
             style={{
               fontFamily: FONTS.serif,
               fontSize: fonts.heroHeading,
@@ -356,12 +438,13 @@ export default function Hook() {
           </h1>
 
           <p
-            className="mt-4 font-medium text-[#8d8d8d] leading-tight"
+            className="mt-4 font-medium text-[#8d8d8d] w-[90%] leading-tight"
             style={{
               fontSize: fonts.subtitle,
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
+              transition:
+                "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
             }}
           >
             {HOOK.subtext}
@@ -369,7 +452,7 @@ export default function Hook() {
 
           <Link
             href={HOOK.cta.href}
-            className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
+            className="mt-8 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
             style={{
               fontSize: "16px",
               border: "0.9px solid black",
@@ -377,7 +460,8 @@ export default function Hook() {
               backgroundColor: "#B7D7A8",
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
+              transition:
+                "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
             }}
           >
             {HOOK.cta.label}
@@ -390,91 +474,39 @@ export default function Hook() {
             />
           </Link>
         </div>
-      </div>
 
-      {/* Desktop/tablet layout: text left, image right */}
-      {/* Text content - left side */}
-      <div
-        ref={sectionRef}
-        className="hidden md:block absolute md:bottom-30 lg:bottom-55 left-0 right-0 mx-auto max-w-[80%] md:left-20 md:right-auto md:mx-0 md:max-w-[50%]"
-      >
-        <h1
-          className="font-semibold leading-tight text-[#1b1b1b]"
-          style={{
-            fontFamily: FONTS.serif,
-            fontSize: fonts.heroHeading,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
-          }}
-        >
-          {HOOK.headline}
-        </h1>
-
-        <p
-          className="mt-4 font-medium text-[#8d8d8d] w-[90%] leading-tight"
-          style={{
-            fontSize: fonts.subtitle,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
-          }}
-        >
-          {HOOK.subtext}
-        </p>
-
-        <Link
-          href={HOOK.cta.href}
-          className="mt-8 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
-          style={{
-            fontSize: "16px",
-            border: "0.9px solid black",
-            borderRadius: "11.28px",
-            backgroundColor: "#B7D7A8",
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
-          }}
-        >
-          {HOOK.cta.label}
-          <Image
-            src="/assets/ui/solar_arrow-up-broken.svg"
-            alt=""
-            width={20}
-            height={20}
-            className="h-5 w-5"
-          />
-        </Link>
-      </div>
-
-      {/* Cards + Main image container - right side (tablet and desktop) */}
-      <div
-        className="hidden md:flex absolute top-1/2 md:right-[5%] lg:right-[8%] xl:right-[10%] items-center justify-center"
-        style={{
-          transform: "translateY(-50%)",
-        }}
-      >
-        {/* Pinterest cards - background */}
-        <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
-          {pinterestCards}
-        </div>
-
-        {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
+        {/* Cards + Main image container - right side (tablet and desktop) */}
         <div
-          className="relative flex items-center justify-center pointer-events-none"
+          className="hidden md:flex absolute top-1/2 md:right-[5%] lg:right-[8%] xl:right-[10%] items-center justify-center"
           style={{
-            width: cardSize.cardWidth * 2 + cardSize.gap,
-            height: containerHeight,
-            zIndex: 10,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s",
+            transform: "translateY(-50%)",
           }}
         >
-          {mainImageComponent}
+          {/* Pinterest cards - background */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ zIndex: 0 }}
+          >
+            {pinterestCards}
+          </div>
+
+          {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
+          <div
+            className="relative flex items-center justify-center pointer-events-none"
+            style={{
+              width: cardSize.cardWidth * 2 + cardSize.gap,
+              height: containerHeight,
+              zIndex: 10,
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0)" : "translateY(40px)",
+              transition:
+                "opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s",
+            }}
+          >
+            {mainImageComponent}
+          </div>
         </div>
-      </div>
-    </DotsScene>
+      </DotsScene>
     </div>
   );
 }
