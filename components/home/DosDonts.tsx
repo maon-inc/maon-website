@@ -170,7 +170,7 @@ export default function DosDonts() {
 
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-[#f7f6f5] py-14">
+      <div className="min-h-screen py-14">
         {content}
       </div>
     );
@@ -183,7 +183,7 @@ export default function DosDonts() {
       stiffnessMult={2}
       colorGray="#F7F6F5"
       colorAccent="#B7D7A8"
-      className="min-h-screen bg-[#f7f6f5] py-14"
+      className="min-h-screen py-14"
     >
       {content}
     </DotsScene>

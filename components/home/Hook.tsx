@@ -148,13 +148,13 @@ export default function Hook() {
         className="absolute left-0 right-0 top-0 h-12 z-20 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, #f7f6f5 0%, transparent 100%)",
+            "linear-gradient(to bottom, #F9F0FF 0%, transparent 100%)",
         }}
       />
       <div
         className="absolute left-0 right-0 bottom-0 h-12 z-20 pointer-events-none"
         style={{
-          background: "linear-gradient(to top, #f7f6f5 0%, transparent 100%)",
+          background: "linear-gradient(to top, #F9F0FF 0%, transparent 100%)",
         }}
       />
 
@@ -333,99 +333,15 @@ export default function Hook() {
         dissipate
         morphSpeedMult={2}
         stiffnessMult={2}
-        className="relative min-h-screen bg-[#f7f6f5]"
+        className="relative h-screen flex items-center justify-center"
       >
-        {/* Mobile layout: main image + text, cards in background */}
-        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
-          {/* Cards + Main image container - centered */}
-          <div className="relative mb-20">
-            {/* Pinterest cards - background */}
-            <div
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ zIndex: 0 }}
-            >
-              {pinterestCards}
-            </div>
-
-            {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
-            <div
-              className="relative flex items-center justify-center pointer-events-none"
-              style={{
-                width: cardSize.cardWidth * 2 + cardSize.gap,
-                height: containerHeight,
-                zIndex: 10,
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                transition:
-                  "opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s",
-              }}
-            >
-              {mainImageComponent}
-            </div>
-          </div>
-
-          {/* Text content - below image on mobile */}
-          <div ref={mobileSectionRef} className="text-center">
-            <h1
-              className="font-semibold leading-tight text-[#1b1b1b]"
-              style={{
-                fontFamily: FONTS.serif,
-                fontSize: fonts.heroHeading,
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
-              }}
-            >
-              {HOOK.headline}
-            </h1>
-
-            <p
-              className="mt-4 font-medium text-[#8d8d8d] leading-tight"
-              style={{
-                fontSize: fonts.subtitle,
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                transition:
-                  "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
-              }}
-            >
-              {HOOK.subtext}
-            </p>
-
-            <Link
-              href={HOOK.cta.href}
-              className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
-              style={{
-                fontSize: "16px",
-                border: "0.9px solid black",
-                borderRadius: "11.28px",
-                backgroundColor: "#B7D7A8",
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                transition:
-                  "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
-              }}
-            >
-              {HOOK.cta.label}
-              <Image
-                src="/assets/ui/solar_arrow-up-broken.svg"
-                alt=""
-                width={20}
-                height={20}
-                className="h-5 w-5"
-              />
-            </Link>
-          </div>
-        </div>
-
-        {/* Desktop/tablet layout: text left, image right */}
-        {/* Text content - left side */}
+        {/* Centered text content */}
         <div
           ref={sectionRef}
-          className="hidden md:block absolute md:bottom-30 lg:bottom-55 left-0 right-0 mx-auto max-w-[80%] md:left-20 md:right-auto md:mx-0 md:max-w-[50%] xl:max-w-[45%]"
+          className="flex flex-col items-center justify-center text-center px-6 max-w-4xl"
         >
           <h1
-            className="font-semibold leading-tight text-[#1b1b1b] xl:max-w-[600px]"
+            className="font-semibold leading-tight text-[#1b1b1b]"
             style={{
               fontFamily: FONTS.serif,
               fontSize: fonts.heroHeading,
@@ -438,7 +354,7 @@ export default function Hook() {
           </h1>
 
           <p
-            className="mt-4 font-medium text-[#8d8d8d] w-[90%] leading-tight"
+            className="mt-4 font-medium text-[#8d8d8d] leading-tight"
             style={{
               fontSize: fonts.subtitle,
               opacity: isVisible ? 1 : 0,
@@ -452,12 +368,11 @@ export default function Hook() {
 
           <Link
             href={HOOK.cta.href}
-            className="mt-8 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
+            className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-white transition-opacity hover:opacity-90"
             style={{
               fontSize: "16px",
-              border: "0.9px solid black",
-              borderRadius: "11.28px",
-              backgroundColor: "#B7D7A8",
+              borderRadius: "9999px",
+              backgroundColor: "black",
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? "translateY(0)" : "translateY(40px)",
               transition:
@@ -465,47 +380,124 @@ export default function Hook() {
             }}
           >
             {HOOK.cta.label}
-            <Image
-              src="/assets/ui/solar_arrow-up-broken.svg"
-              alt=""
-              width={20}
-              height={20}
-              className="h-5 w-5"
-            />
           </Link>
-        </div>
 
-        {/* Cards + Main image container - right side (tablet and desktop) */}
-        <div
-          className="hidden md:flex absolute top-1/2 md:right-[5%] lg:right-[8%] xl:right-[10%] items-center justify-center"
-          style={{
-            transform: "translateY(-50%)",
-          }}
-        >
-          {/* Pinterest cards - background */}
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ zIndex: 0 }}
-          >
-            {pinterestCards}
+          {/* Hook image with heartbeat line */}
+          <div className="relative mt-8 flex items-center justify-center">
+            {/* Animated heartbeat line - static line with moving peak overlay */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 h-[200px] pointer-events-none overflow-hidden"
+              style={{
+                width: "calc(100vw - 100px)",
+                opacity: isVisible ? 1 : 0,
+                transition: "opacity 0.8s ease-out 0.4s",
+              }}
+            >
+              {/* Static flat dashed line */}
+              <svg
+                className="absolute h-full w-full"
+                viewBox="0 0 1000 200"
+                preserveAspectRatio="none"
+              >
+                <line
+                  x1="0"
+                  y1="100"
+                  x2="1000"
+                  y2="100"
+                  stroke="#EEDBF5"
+                  strokeWidth="4"
+                  strokeDasharray="18"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              {/* Moving peak that travels across - erases flat line where it passes */}
+              <div
+                className="pulse-wave absolute h-full"
+                style={{ width: "20%", left: "-20%" }}
+              >
+                <svg
+                  className="h-full w-full"
+                  viewBox="0 0 200 200"
+                  preserveAspectRatio="none"
+                >
+                  {/* Background to erase the flat line */}
+                  <line
+                    x1="0"
+                    y1="100"
+                    x2="200"
+                    y2="100"
+                    stroke="var(--pulse-bg, #F9F0FF)"
+                    strokeWidth="8"
+                  />
+                  {/* The peak pattern */}
+                  <path
+                    d="M0 100 L20 100 L40 92 L60 100 L80 100 L100 108 L120 40 L140 160 L160 100 L180 100 L200 100"
+                    fill="none"
+                    stroke="#EEDBF5"
+                    strokeWidth="4"
+                    strokeDasharray="18"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Image */}
+            <Image
+              src="/assets/hook/hook image.png"
+              alt="MAON app preview"
+              width={400}
+              height={300}
+              className="relative z-10 w-[280px] md:w-[350px] lg:w-[400px] h-auto"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                transition:
+                  "opacity 0.8s ease-out 0.45s, transform 0.8s ease-out 0.45s",
+              }}
+            />
+          {/* Pulse wave animation */}
+          <style jsx>{`
+            @keyframes pulseMove {
+              0% {
+                left: -20%;
+              }
+              100% {
+                left: 100%;
+              }
+            }
+            .pulse-wave {
+              animation: pulseMove 5s linear infinite;
+              --pulse-bg: #F9F0FF;
+            }
+          `}</style>
           </div>
 
-          {/* Main image - centered on cards, foreground, pointer-events-none to allow hover on cards */}
-          <div
-            className="relative flex items-center justify-center pointer-events-none"
-            style={{
-              width: cardSize.cardWidth * 2 + cardSize.gap,
-              height: containerHeight,
-              zIndex: 10,
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition:
-                "opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s",
-            }}
-          >
+        </div>
+
+        {/* Images hidden for now */}
+        {/*
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-start px-6 pt-20">
+          <div className="relative mb-20">
+            <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
+              {pinterestCards}
+            </div>
+            <div className="relative flex items-center justify-center pointer-events-none" style={{ width: cardSize.cardWidth * 2 + cardSize.gap, height: containerHeight, zIndex: 10 }}>
+              {mainImageComponent}
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden md:flex absolute top-1/2 md:right-[5%] lg:right-[8%] xl:right-[10%] items-center justify-center" style={{ transform: "translateY(-50%)" }}>
+          <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
+            {pinterestCards}
+          </div>
+          <div className="relative flex items-center justify-center pointer-events-none" style={{ width: cardSize.cardWidth * 2 + cardSize.gap, height: containerHeight, zIndex: 10 }}>
             {mainImageComponent}
           </div>
         </div>
+        */}
       </DotsScene>
     </div>
   );

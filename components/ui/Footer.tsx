@@ -9,7 +9,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full px-2 py-4 bg-[#f7f6f5] text-[#1b1b1b]">
+    <footer className="w-full px-2 py-4 text-[#1b1b1b]">
       <div className="max-w-[1400px] mx-auto">
         {/* Desktop: Horizontal layout */}
         <div className="hidden md:flex flex-row items-center justify-between gap-6">

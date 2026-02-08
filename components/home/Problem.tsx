@@ -31,7 +31,7 @@ export default function Problem() {
       morphSpeedMult={2}
       stiffnessMult={2}
       scrollStartOffset={-500}
-      className="bg-[#f7f6f5] py-20"
+      className="py-20"
     >
       <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
       {/* Card container - z-20 to appear above dots canvas */}

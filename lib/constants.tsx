@@ -35,7 +35,7 @@ export const COLORS = {
 export const FONT_SIZES = {
   heroHeading: "48px",
   mainHeading: "35px",
-  subtitle: "30px",
+  subtitle: "25px",
   cardText: "27px",
   label: "15px",
   button: "24px",
@@ -130,10 +130,10 @@ export const NAV = {
 // ============================================
 
 export const HOOK = {
-  headline: "AI therapist plugged into your biometrics",
-  subtext: "works with the Apple Watch + more",
+  headline: "agentic mental health assistant plugged into your biometrics",
+  subtext: "autonomous haptic and digital interventions",
   cta: {
-    label: "Join the waitlist",
+    label: "save your spot",
     href: "/waitlist",
   },
 } as const;

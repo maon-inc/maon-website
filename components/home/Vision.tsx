@@ -42,7 +42,7 @@ export default function Vision() {
       stiffnessMult={2}
       snapOnEnter
       homeSnapMs={400}
-      className="min-h-screen bg-[#f7f6f5] py-28"
+      className="min-h-screen py-28"
     >
       <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
         {/* Label */}
