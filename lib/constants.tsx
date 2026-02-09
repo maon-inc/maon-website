@@ -158,9 +158,8 @@ export const PROBLEM = {
 // ============================================
 
 export const APPROACH = {
-  label: "product",
   headline:
-    "All you need is a smart watch.\nWorks with Apple Watch, Samsung Galaxy Watch, and more.",
+    "We listen to your body, look at app usage patterns, and your conversation with Maon to detect distress and autonomously intervene early.",
   cards: [
     { title: "listen to your body" },
     { title: "identify emotional patterns" },

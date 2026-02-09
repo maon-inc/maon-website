@@ -4,9 +4,33 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { APPROACH } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
-import DotsScene from "@/components/motion/DotsScene";
 
-const PRODUCT_FEATURES = [1, 2, 3, 4];
+const PRODUCT_CARDS = [
+  {
+    icon: "/assets/product/producticon1.svg",
+    title: "identify patterns",
+    subtitle: "your body, reflection, and app usage tell a story. We help you understand it.",
+    image: "/assets/product/producttrends.svg",
+  },
+  {
+    icon: "/assets/product/producticon2.svg",
+    title: "intervene",
+    subtitle: "we don't stop at just telling you, we step in when it matters.",
+    image: "/assets/product/productintervene.svg",
+  },
+  {
+    icon: "/assets/product/producticon3.svg",
+    title: "talk to an AI therapist",
+    subtitle: "have a conversation with Maon, like a trusted friend",
+    image: "/assets/product/producttherapist.svg",
+  },
+  {
+    icon: "/assets/product/producticon4.svg",
+    title: "get more support",
+    subtitle: "when you need more, we match you with the right therapist.",
+    image: "/assets/product/productmarket.svg",
+  },
+];
 
 export default function Product() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -32,44 +56,49 @@ export default function Product() {
   }, []);
 
   return (
-    <DotsScene
-      dissipate
-      morphSpeedMult={2}
-      stiffnessMult={2}
-      className="min-h-screen py-14"
-    >
-      <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
-        <p
-          className="mt-8 font-semibold text-[#8d8d8d] text-[12px] md:text-[15px]"
-          style={fadeUpStyle()}
-        >
-          {APPROACH.label}
-        </p>
-
+    <div className="min-h-screen py-14">
+      <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:px-20 flex flex-col items-center text-center">
         <h2
-          className="pt-[30px] max-w-5xl whitespace-pre-line font-medium leading-tight text-[#1b1b1b] text-[32px] md:text-[35px] lg:text-[48px]"
+          className="pt-[30px] max-w-5xl whitespace-pre-line font-medium leading-tight text-[#1b1b1b] text-[24px] md:text-[30px] lg:text-[38px]"
           style={fadeUpStyle(0.15)}
         >
           {APPROACH.headline}
         </h2>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full md:w-[85%]">
-          {PRODUCT_FEATURES.map((num, index) => (
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full md:max-w-[75%]">
+          {PRODUCT_CARDS.map((card, index) => (
             <div
-              key={num}
-              style={fadeUpStyle(0.3 + index * 0.1)}
+              key={index}
+              className="rounded-3xl p-8 flex flex-col items-center text-center"
+              style={{
+                background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(176, 107, 117, 0.13))",
+                ...fadeUpStyle(0.3 + index * 0.1)
+              }}
             >
               <Image
-                src={`/assets/product/${num}.svg`}
-                alt={`Product feature ${num}`}
-                width={400}
-                height={400}
-                className="w-full h-auto"
+                src={card.icon}
+                alt={card.title}
+                width={60}
+                height={60}
+                className="mb-6"
+              />
+              <h3 className="text-black font-semibold text-2xl mb-3">
+                {card.title}
+              </h3>
+              <p className="text-black/80 text-sm mb-8 max-w-md">
+                {card.subtitle}
+              </p>
+              <Image
+                src={card.image}
+                alt={card.title}
+                width={280}
+                height={210}
+                className="w-[70%] h-auto rounded-xl"
               />
             </div>
           ))}
         </div>
       </div>
-    </DotsScene>
+    </div>
   );
 }

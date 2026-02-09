@@ -4,7 +4,6 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { DOS_DONTS, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
-import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function DosDonts() {
@@ -69,21 +68,9 @@ export default function DosDonts() {
 
   const content = (
     <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
-        <p
-          className="mt-8 font-semibold text-[#8d8d8d]"
-          style={{
-            fontSize: fonts.label,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
-          }}
-        >
-          {DOS_DONTS.label}
-        </p>
-
         {/* What we do section */}
         <p
-          className="mt-30 font-semibold text-[#1b1b1b]"
+          className="mt-8 font-semibold text-[#1b1b1b] text-center"
           style={{
             fontSize: "24px",
             opacity: isVisible ? 1 : 0,
@@ -94,32 +81,33 @@ export default function DosDonts() {
           {DOS_DONTS.doSection.title}
         </p>
 
-        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-6 grid md:w-[80%] lg:w-[72%] grid-cols-1 md:grid-cols-3 gap-5 mx-auto">
           {DOS_DONTS.doSection.cards.map((card, index) => (
             <div
               key={index}
               ref={(el) => { doCardsRef.current[index] = el; }}
-              className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-[#1b1b1b] px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-10 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
+              className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-[#7A7A7A] px-5 py-5 md:min-h-0 md:aspect-[1/1.2] md:px-0 md:pt-8 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
                 transition: `opacity 0.8s ease-out ${0.3 + index * 0.1}s, transform 0.8s ease-out ${0.3 + index * 0.1}s`,
+                boxShadow: '0 6px 3px rgba(0, 0, 0, 0.20)',
                 ...(isMobile && doCardHeight ? { height: doCardHeight } : {}),
               }}
             >
-              <div className="flex w-full max-w-[320px] flex-row items-center justify-start gap-6 md:w-3/4 md:max-w-none md:flex-col md:items-start">
-                <div className="flex w-16 shrink-0 justify-center md:justify-start">
+              <div className="flex w-full max-w-[256px] flex-row items-center justify-center gap-5 md:w-3/4 md:max-w-none md:flex-col md:items-center">
+                <div className="flex w-12 shrink-0 justify-center">
                   <Image
                     src={card.icon}
                     alt={card.text}
                     width={0}
-                    height={42}
-                    style={{ width: "auto", height: 42 }}
+                    height={34}
+                    style={{ width: "auto", height: 34 }}
                   />
                 </div>
                 <p
-                  className="font-medium text-white text-left"
-                  style={{ fontSize: fonts.cardText }}
+                  className="font-medium text-white text-center"
+                  style={{ fontSize: `calc(${fonts.cardText} * 0.8)` }}
                 >
                   {card.text}
                 </p>
@@ -130,7 +118,7 @@ export default function DosDonts() {
 
         {/* What we don't do section */}
         <p
-          className="mt-14 font-semibold text-[#1b1b1b]"
+          className="mt-14 font-semibold text-[#1b1b1b] text-center"
           style={{
             fontSize: "24px",
             opacity: isVisible ? 1 : 0,
@@ -141,12 +129,12 @@ export default function DosDonts() {
           {DOS_DONTS.dontSection.title}
         </p>
 
-        <div className="mt-6 grid md:w-[100%] lg:w-[90%] grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-6 grid md:w-[80%] lg:w-[72%] grid-cols-1 md:grid-cols-3 gap-5 mx-auto">
           {DOS_DONTS.dontSection.cards.map((card, index) => (
             <div
               key={index}
               ref={(el) => { dontCardsRef.current[index] = el; }}
-              className="flex min-h-[150px] items-center justify-center rounded-[20px] bg-white px-6 py-6 md:min-h-0 md:aspect-[1/1.2] md:items-start md:px-0 md:pt-14 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
+              className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-[#7A7A7A]/24 px-5 py-5 md:min-h-0 md:aspect-[1/1.2] md:px-0 md:pt-11 md:pb-0 lg:aspect-[1/1.1] xl:aspect-[1/.7]"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(40px)",
@@ -154,10 +142,10 @@ export default function DosDonts() {
                 ...(isMobile && dontCardHeight ? { height: dontCardHeight } : {}),
               }}
             >
-              <div className="flex w-full max-w-[320px] flex-col items-center md:w-3/4 md:max-w-none md:items-start">
+              <div className="flex w-full max-w-[256px] flex-col items-center md:w-3/4 md:max-w-none">
                 <p
-                  className="font-medium text-[#1b1b1b] text-center md:text-left"
-                  style={{ fontSize: fonts.cardText }}
+                  className="font-medium text-[#1b1b1b] text-center"
+                  style={{ fontSize: `calc(${fonts.cardText} * 0.8)` }}
                 >
                   {card.text}
                 </p>
@@ -168,24 +156,9 @@ export default function DosDonts() {
     </div>
   );
 
-  if (isMobile) {
-    return (
-      <div className="min-h-screen py-14">
-        {content}
-      </div>
-    );
-  }
-
   return (
-    <DotsScene
-      dissipate
-      morphSpeedMult={2}
-      stiffnessMult={2}
-      colorGray="#F7F6F5"
-      colorAccent="#B7D7A8"
-      className="min-h-screen py-14"
-    >
+    <div className="min-h-screen py-14">
       {content}
-    </DotsScene>
+    </div>
   );
 }
