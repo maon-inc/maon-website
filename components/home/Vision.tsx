@@ -2,12 +2,11 @@
 
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { VISION, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
-import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePostHog } from "posthog-js/react";
+import { useScrollContext } from "@/components/providers/ScrollProvider";
 
 export default function Vision() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -15,6 +14,7 @@ export default function Vision() {
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
   const posthog = usePostHog();
+  const { setIsVisionVisible } = useScrollContext();
 
   const handleCtaClick = () => {
     posthog?.capture("waitlist_cta_click", { location: "vision_section" });
@@ -28,88 +28,45 @@ export default function Vision() {
       el,
       (intersecting) => {
         if (intersecting) setIsVisible(true);
+        setIsVisionVisible(intersecting);
       },
       { threshold: 0 }
     );
-  }, []);
+  }, [setIsVisionVisible]);
 
   return (
-    <DotsScene
-      svgUrl="/assets/ui/hero.svg"
-      targetScale={0.8}
-      targetAnchor="right-center"
-      morphSpeedMult={2}
-      stiffnessMult={2}
-      snapOnEnter
-      homeSnapMs={400}
-      className="min-h-screen py-28"
-    >
-      <div ref={sectionRef} className="mx-auto max-w-[90%] md:max-w-none md:mx-0 md:px-20">
-        {/* Label */}
-        <p
-          className="font-semibold text-[#8d8d8d]"
+    <div className="min-h-screen flex items-center justify-center">
+      <div ref={sectionRef} className="flex flex-col items-center text-center px-6 max-w-4xl">
+        {/* Main text */}
+        <h2
+          className="font-medium leading-tight text-[#1b1b1b]"
           style={{
-            fontSize: fonts.label,
+            fontSize: fonts.mainHeading,
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
             transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
           }}
         >
-          {VISION.label}
-        </p>
-
-        {/* Main content */}
-        <div className="mt-35 max-w-2xl">
-          <h2
-            className="font-medium leading-tight text-[#1b1b1b]"
-            style={{
-              fontSize: fonts.mainHeading,
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
-            }}
-          >
-            {VISION.headline}
-          </h2>
-
-          <p
-            className="mt-8 font-medium text-[#1b1b1b]"
-            style={{
-              fontSize: fonts.mainHeading,
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? "translateY(0)" : "translateY(40px)",
-              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
-            }}
-          >
-            {VISION.subheadline}
-          </p>
-        </div>
+          Get immediate support before emotions escalate.
+        </h2>
 
         {/* CTA Button */}
         <Link
           href={VISION.cta.href}
           onClick={handleCtaClick}
-          className="mt-20 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-[#1b1b1b] transition-opacity hover:opacity-90"
+          className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-white transition-opacity hover:opacity-90"
           style={{
             fontSize: "16px",
-            border: "0.9px solid black",
-            borderRadius: "11.28px",
-            backgroundColor: "#B7D7A8",
+            borderRadius: "9999px",
+            backgroundColor: "black",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 0.8s ease-out 0.45s, transform 0.8s ease-out 0.45s",
+            transition: "opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s",
           }}
         >
-          {VISION.cta.label}
-          <Image
-            src="/assets/ui/solar_arrow-up-broken.svg"
-            alt=""
-            width={20}
-            height={20}
-            className="h-5 w-5"
-          />
+          save your spot
         </Link>
       </div>
-    </DotsScene>
+    </div>
   );
 }

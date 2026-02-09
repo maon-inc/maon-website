@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { NAV, SITE, FONT_SIZES, FONTS, COLORS } from "@/lib/constants";
+import { NAV, SITE, FONTS, COLORS } from "@/lib/constants";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
 import { usePostHog } from "posthog-js/react";
 
 export default function Nav() {
-  const { isHookPassed } = useScrollContext();
+  const { isHookPassed, isVisionVisible } = useScrollContext();
   const posthog = usePostHog();
 
   const handleWaitlistClick = () => {
     posthog?.capture("waitlist_cta_click", { location: "nav_fixed" });
   };
+
+  const showButton = isHookPassed && !isVisionVisible;
   return (
     <>
       {/* Logo nav - absolute positioned */}
@@ -63,25 +65,17 @@ export default function Nav() {
       <Link
         href={NAV.cta.href}
         onClick={handleWaitlistClick}
-        className="fixed top-6 right-6 md:right-20 z-50 hidden md:inline-flex w-fit items-center justify-center gap-1.5 px-3 py-1.5 font-medium text-[#1b1b1b] hover:opacity-90"
+        className="fixed top-6 right-6 md:right-20 z-50 hidden md:inline-flex w-fit items-center justify-center px-5 py-2.5 font-normal text-white hover:opacity-90"
         style={{
-          fontSize: FONT_SIZES.navLink,
-          border: "0.8px solid black",
-          borderRadius: "8px",
-          backgroundColor: "#B7D7A8",
-          opacity: isHookPassed ? 1 : 0,
-          pointerEvents: isHookPassed ? "auto" : "none",
+          fontSize: "16px",
+          borderRadius: "9999px",
+          backgroundColor: "black",
+          opacity: showButton ? 1 : 0,
+          pointerEvents: showButton ? "auto" : "none",
           transition: "opacity 0.3s ease-out",
         }}
       >
         waitlist
-        <Image
-          src="/assets/ui/solar_arrow-up-broken.svg"
-          alt=""
-          width={14}
-          height={14}
-          className="h-3.5 w-3.5"
-        />
       </Link>
     </>
   );

@@ -24,7 +24,7 @@
 }
 
 body {
-  background: linear-gradient(to bottom, #F9F0FF 0%, #FFFAF9 20%, #FBEDEB 82%, #FED4E3 100%);
+  background: linear-gradient(to bottom, #F8EFFF 0%, #FFFAF9 20%, #FFF9F0 82%, #FCE2E7 100%);
   min-height: 100vh;
   color: var(--foreground);
   font-family: 'Google Sans Flex', Arial, Helvetica, sans-serif;

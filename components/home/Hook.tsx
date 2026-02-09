@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { HOOK, FONT_SIZES, FONT_SIZES_MOBILE, FONTS } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
-import DotsScene from "@/components/motion/DotsScene";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
 
@@ -148,13 +147,13 @@ export default function Hook() {
         className="absolute left-0 right-0 top-0 h-12 z-20 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, #F9F0FF 0%, transparent 100%)",
+            "linear-gradient(to bottom, #F8EFFF 0%, transparent 100%)",
         }}
       />
       <div
         className="absolute left-0 right-0 bottom-0 h-12 z-20 pointer-events-none"
         style={{
-          background: "linear-gradient(to top, #F9F0FF 0%, transparent 100%)",
+          background: "linear-gradient(to top, #F8EFFF 0%, transparent 100%)",
         }}
       />
 
@@ -328,13 +327,13 @@ export default function Hook() {
   );
 
   return (
-    <div ref={containerRef}>
-      <DotsScene
-        dissipate
-        morphSpeedMult={2}
-        stiffnessMult={2}
-        className="relative h-screen flex items-center justify-center"
-      >
+    <div
+      ref={containerRef}
+      style={{
+        background: "radial-gradient(circle at top left, #F8EFFF 0%, #FFFAF9 50%)",
+      }}
+    >
+      <div className="relative h-screen flex items-center justify-center">
         {/* Centered text content */}
         <div
           ref={sectionRef}
@@ -384,68 +383,35 @@ export default function Hook() {
 
           {/* Hook image with heartbeat line */}
           <div className="relative mt-8 flex items-center justify-center">
-            {/* Animated heartbeat line - static line with moving peak overlay */}
-            <div
-              className="absolute left-1/2 -translate-x-1/2 h-[200px] pointer-events-none overflow-hidden"
+            {/* Static heartbeat line - centered with peak/trough on the right */}
+            <svg
+              className="absolute pointer-events-none"
               style={{
-                width: "calc(100vw - 100px)",
+                width: "100vw",
+                height: "120px",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
                 opacity: isVisible ? 1 : 0,
                 transition: "opacity 0.8s ease-out 0.4s",
               }}
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="none"
             >
-              {/* Static flat dashed line */}
-              <svg
-                className="absolute h-full w-full"
-                viewBox="0 0 1000 200"
-                preserveAspectRatio="none"
-              >
-                <line
-                  x1="0"
-                  y1="100"
-                  x2="1000"
-                  y2="100"
-                  stroke="#EEDBF5"
-                  strokeWidth="4"
-                  strokeDasharray="18"
-                  strokeLinecap="round"
-                />
-              </svg>
-
-              {/* Moving peak that travels across - erases flat line where it passes */}
-              <div
-                className="pulse-wave absolute h-full"
-                style={{ width: "20%", left: "-20%" }}
-              >
-                <svg
-                  className="h-full w-full"
-                  viewBox="0 0 200 200"
-                  preserveAspectRatio="none"
-                >
-                  {/* Background to erase the flat line */}
-                  <line
-                    x1="0"
-                    y1="100"
-                    x2="200"
-                    y2="100"
-                    stroke="var(--pulse-bg, #F9F0FF)"
-                    strokeWidth="8"
-                  />
-                  {/* The peak pattern */}
-                  <path
-                    d="M0 100 L20 100 L40 92 L60 100 L80 100 L100 108 L120 40 L140 160 L160 100 L180 100 L200 100"
-                    fill="none"
-                    stroke="#EEDBF5"
-                    strokeWidth="4"
-                    strokeDasharray="18"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-            </div>
+              {/* Dashed line with peak and trough on the right side */}
+              <path
+                d="M0 60 L720 60 L750 60 L780 45 L810 60 L840 15 L870 105 L900 60 L930 60 L960 75 L990 60 L1200 60"
+                fill="none"
+                stroke="#EEDBF5"
+                strokeWidth="3"
+                strokeDasharray="16 12"
+                strokeLinecap="round"
+              />
+            </svg>
 
             {/* Image */}
             <Image
-              src="/assets/hook/hook image.png"
+              src="/assets/hook/hook image.svg"
               alt="MAON app preview"
               width={400}
               height={300}
@@ -457,21 +423,6 @@ export default function Hook() {
                   "opacity 0.8s ease-out 0.45s, transform 0.8s ease-out 0.45s",
               }}
             />
-          {/* Pulse wave animation */}
-          <style jsx>{`
-            @keyframes pulseMove {
-              0% {
-                left: -20%;
-              }
-              100% {
-                left: 100%;
-              }
-            }
-            .pulse-wave {
-              animation: pulseMove 5s linear infinite;
-              --pulse-bg: #F9F0FF;
-            }
-          `}</style>
           </div>
 
         </div>
@@ -498,7 +449,7 @@ export default function Hook() {
           </div>
         </div>
         */}
-      </DotsScene>
+      </div>
     </div>
   );
 }
