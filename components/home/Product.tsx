@@ -10,25 +10,25 @@ const PRODUCT_CARDS = [
     icon: "/assets/product/producticon1.svg",
     title: "identify patterns",
     subtitle: "your body, reflection, and app usage tell a story. We help you understand it.",
-    image: "/assets/product/producttrends.svg",
+    image: "/assets/product/productTrends.svg",
   },
   {
     icon: "/assets/product/producticon2.svg",
     title: "intervene",
     subtitle: "we don't stop at just telling you, we step in when it matters.",
-    image: "/assets/product/productintervene.svg",
+    image: "/assets/product/productIntervene.svg",
   },
   {
     icon: "/assets/product/producticon3.svg",
     title: "talk to an AI therapist",
     subtitle: "have a conversation with Maon, like a trusted friend",
-    image: "/assets/product/producttherapist.svg",
+    image: "/assets/product/productTherapist.svg",
   },
   {
     icon: "/assets/product/producticon4.svg",
     title: "get more support",
     subtitle: "when you need more, we match you with the right therapist.",
-    image: "/assets/product/productmarket.svg",
+    image: "/assets/product/productMarket.svg",
   },
 ];
 

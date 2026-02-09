@@ -411,7 +411,7 @@ export default function Hook() {
 
             {/* Image */}
             <Image
-              src="/assets/hook/hook image.svg"
+              src="/assets/hook/hook-image.svg"
               alt="MAON app preview"
               width={400}
               height={300}
