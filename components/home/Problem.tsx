@@ -48,7 +48,7 @@ export default function Problem() {
           {Array.from({ length: 100 }, (_, i) => (
             <div
               key={i}
-              className="w-6 h-6 md:w-7 md:h-7 rounded-full transition-colors duration-1000 ease-out"
+              className="w-6 h-6 md:w-7 md:h-7 rounded-full transition-colors duration-1500 ease-out"
               style={{
                 backgroundColor: i < 74 && isVisible ? '#B06B75' : 'rgba(0, 0, 0, 0.15)',
                 transitionDelay: isVisible ? `${i * 0.02}s` : '0s'
