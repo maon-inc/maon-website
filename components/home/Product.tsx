@@ -93,7 +93,9 @@ export default function Product() {
                 alt={card.title}
                 width={280}
                 height={210}
+                unoptimized
                 className="w-[70%] h-auto rounded-xl"
+                style={{ imageRendering: '-webkit-optimize-contrast' }}
               />
             </div>
           ))}
