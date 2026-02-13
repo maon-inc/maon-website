@@ -22,13 +22,13 @@ const PRODUCT_CARDS = [
     icon: "/assets/product/producticon3.svg",
     title: "talk to an AI therapist",
     subtitle: "have a conversation with Maon, like a trusted friend",
-    image: "/assets/product/productTherapist.svg",
+    image: "/assets/product/productTherapistpng.png",
   },
   {
     icon: "/assets/product/producticon4.svg",
     title: "get more support",
     subtitle: "when you need more, we match you with the right therapist.",
-    image: "/assets/product/productMarket.svg",
+    image: "/assets/product/productMarketpng.png",
   },
 ];
 
@@ -88,28 +88,13 @@ export default function Product() {
               <p className="text-black/80 text-sm mb-8 max-w-md">
                 {card.subtitle}
               </p>
-              {card.image.includes('Therapist') || card.image.includes('Market') ? (
-                // Use regular img tag for complex SVGs that Safari struggles with
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="w-[70%] h-auto rounded-xl"
-                  style={{
-                    maxWidth: '100%',
-                    height: 'auto',
-                    display: 'block'
-                  }}
-                />
-              ) : (
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  width={899}
-                  height={210}
-                  unoptimized
-                  className="w-[70%] h-auto rounded-xl"
-                />
-              )}
+              <Image
+                src={card.image}
+                alt={card.title}
+                width={899}
+                height={card.image.endsWith('.png') ? 443 : 210}
+                className="w-[70%] h-auto rounded-xl"
+              />
             </div>
           ))}
         </div>
