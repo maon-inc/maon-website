@@ -91,11 +91,16 @@ export default function Product() {
               <Image
                 src={card.image}
                 alt={card.title}
-                width={280}
-                height={210}
+                width={899}
+                height={card.image.includes('Therapist') ? 443 : card.image.includes('Market') ? 450 : 210}
                 unoptimized
                 className="w-[70%] h-auto rounded-xl"
-                style={{ imageRendering: '-webkit-optimize-contrast' }}
+                style={{
+                  imageRendering: 'crisp-edges',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden' as const,
+                  WebkitFontSmoothing: 'antialiased' as const
+                }}
               />
             </div>
           ))}
