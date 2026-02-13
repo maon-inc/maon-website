@@ -88,20 +88,28 @@ export default function Product() {
               <p className="text-black/80 text-sm mb-8 max-w-md">
                 {card.subtitle}
               </p>
-              <Image
-                src={card.image}
-                alt={card.title}
-                width={899}
-                height={card.image.includes('Therapist') ? 443 : card.image.includes('Market') ? 450 : 210}
-                unoptimized
-                className="w-[70%] h-auto rounded-xl"
-                style={{
-                  imageRendering: 'crisp-edges',
-                  transform: 'translateZ(0)',
-                  backfaceVisibility: 'hidden' as const,
-                  WebkitFontSmoothing: 'antialiased' as const
-                }}
-              />
+              {card.image.includes('Therapist') || card.image.includes('Market') ? (
+                // Use regular img tag for complex SVGs that Safari struggles with
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-[70%] h-auto rounded-xl"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+              ) : (
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  width={899}
+                  height={210}
+                  unoptimized
+                  className="w-[70%] h-auto rounded-xl"
+                />
+              )}
             </div>
           ))}
         </div>
