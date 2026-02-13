@@ -193,7 +193,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
             <button
               type="submit"
               disabled={isSubmitting || isSubmitted || error.includes("already on the waitlist")}
-              className={`w-full font-medium rounded-[10px] mt-3 transition-opacity disabled:opacity-50 ${
+              className={`w-full font-medium mt-3 transition-opacity disabled:opacity-50 ${
                 error.includes("already on the waitlist")
                   ? "bg-red-500 text-white"
                   : "bg-[#1b1b1b] text-[#f7f6f5] hover:opacity-90"
@@ -201,6 +201,7 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
               style={{
                 fontSize: isMobile ? "14px" : "16px",
                 height: isMobile ? "35px" : "46px",
+                borderRadius: "9999px",
               }}
             >
               {error.includes("already on the waitlist")
@@ -258,10 +259,11 @@ export default function WaitlistForm({ waitlistId }: WaitlistFormProps) {
           <button
             onClick={handleEarlyBirdCheckout}
             disabled={isCheckoutLoading || spotsRemaining === 0}
-            className="w-full bg-[#B7D7A8] text-[#1b1b1b] font-medium rounded-[10px] mt-6 hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full bg-[#AE6C75] text-white font-medium mt-6 hover:opacity-90 transition-opacity disabled:opacity-50"
             style={{
               fontSize: isMobile ? "14px" : "16px",
               height: isMobile ? "35px" : "46px",
+              borderRadius: "9999px",
             }}
           >
             {isCheckoutLoading ? "Loading..." : spotsRemaining === 0 ? "sold out" : "be an early bird"}
