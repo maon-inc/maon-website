@@ -55,7 +55,12 @@ export default function WaitlistPage() {
   }, [showForm, waitlistId, posthog]);
 
   return (
-    <div className="min-h-screen bg-[#f7f6f5] flex flex-col">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        background: "linear-gradient(to bottom, #F8EFFF 0%, #FFF9F0 100%)"
+      }}
+    >
       <div className="flex-1 flex items-center justify-center py-28">
         <div className="w-full max-w-[80%] md:max-w-3xl lg:max-w-4xl mx-auto">
           {showForm ? (
