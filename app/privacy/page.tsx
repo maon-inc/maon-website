@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
           className="text-[#8d8d8d] mb-12"
           style={{ fontFamily: FONTS.sans }}
         >
-          Last Updated: February 1, 2025
+          Last Updated: March 2, 2025
         </p>
 
         <div
@@ -78,7 +78,17 @@ export default function PrivacyPolicy() {
               <li>Feedback and communications with us</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mb-3 mt-6">4. Automatically Collected Information</h3>
+            <h3 className="text-xl font-semibold mb-3 mt-6">4. Phone Number and Communications Data</h3>
+            <p className="mb-3">
+              If you opt in to receive SMS or voice communications from MAON, we collect:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Your phone number</li>
+              <li>SMS and voice communication logs (timestamps, delivery status)</li>
+              <li>Your communication preferences and opt-in/opt-out status</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">5. Automatically Collected Information</h3>
             <ul className="list-disc pl-6 space-y-2">
               <li>Device type, operating system, and version</li>
               <li>IP address and general location (country/region)</li>
@@ -95,7 +105,7 @@ export default function PrivacyPolicy() {
               <li><strong>Provide personalized insights:</strong> Analyze your biometric and behavioral data to identify emotional patterns and provide relevant support</li>
               <li><strong>Deliver interventions:</strong> Offer timely, supportive suggestions based on detected patterns in your data</li>
               <li><strong>Improve our Service:</strong> Understand how users interact with MAON to enhance features and user experience</li>
-              <li><strong>Communicate with you:</strong> Send service-related notifications, updates, and respond to your inquiries</li>
+              <li><strong>Communicate with you:</strong> Send service-related notifications, updates, reminders, and wellness check-ins via SMS, voice, or push notifications</li>
               <li><strong>Ensure security:</strong> Detect and prevent fraud, abuse, and security incidents</li>
               <li><strong>Research and development:</strong> Develop new features and improve our AI models using aggregated, de-identified data</li>
             </ul>
@@ -108,7 +118,7 @@ export default function PrivacyPolicy() {
               <strong>We do not sell your personal data.</strong> We may share your information only in the following circumstances:
             </p>
             <ul className="list-disc pl-6 space-y-3">
-              <li><strong>Service providers:</strong> We work with trusted third parties who help us operate our Service (cloud hosting, analytics, customer support). These providers are bound by confidentiality obligations.</li>
+              <li><strong>Service providers:</strong> We work with trusted third parties who help us operate our Service (cloud hosting, analytics, customer support, and communications platforms such as Twilio for SMS and voice services). These providers are bound by confidentiality obligations and process your data only on our behalf.</li>
               <li><strong>With your consent:</strong> We may share data when you explicitly authorize us to do so.</li>
               <li><strong>Legal requirements:</strong> We may disclose information if required by law, court order, or government request.</li>
               <li><strong>Safety:</strong> We may share information if we believe it&apos;s necessary to prevent harm to you or others.</li>
@@ -199,6 +209,31 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="mt-4">
               You may also lodge a complaint with your local data protection authority.
+            </p>
+          </section>
+
+          {/* SMS and Voice Communications */}
+          <section>
+            <h2 className="text-2xl font-bold mb-4">SMS and Voice Communications</h2>
+            <p className="mb-4">
+              MAON uses Twilio, a third-party communications platform, to send SMS messages and voice communications. By providing your phone number and opting in to receive messages, you consent to receiving SMS and/or voice communications from MAON, including:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Wellness check-ins and reminders</li>
+              <li>Service notifications and account alerts</li>
+              <li>AI-generated supportive interventions</li>
+              <li>Verification codes and security messages</li>
+            </ul>
+            <p className="mb-4">
+              <strong>Message frequency varies.</strong> Message and data rates may apply. You can opt out at any time by replying STOP to any SMS message or by adjusting your communication preferences in the app. Reply HELP for assistance.
+            </p>
+            <p className="mb-4">
+              When we send you SMS or voice communications, your phone number and message data are processed by Twilio in accordance with{" "}
+              <a href="https://www.twilio.com/en-us/legal/privacy" className="text-[#00A452] hover:underline" target="_blank" rel="noopener noreferrer">Twilio&apos;s Privacy Policy</a>.
+              We do not share your phone number with third parties for marketing purposes.
+            </p>
+            <p>
+              Your consent to receive SMS or voice communications is not a condition of using the Service. You may use MAON without opting in to these communications.
             </p>
           </section>
 

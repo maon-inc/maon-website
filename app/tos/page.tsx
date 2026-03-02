@@ -22,7 +22,7 @@ export default function TermsOfService() {
           className="text-[#8d8d8d] mb-12"
           style={{ fontFamily: FONTS.sans }}
         >
-          Last Updated: February 1, 2025
+          Last Updated: March 2, 2025
         </p>
 
         <div
@@ -52,6 +52,7 @@ export default function TermsOfService() {
               <li>Screen time and app usage pattern analysis</li>
               <li>AI-generated insights about emotional patterns</li>
               <li>Optional supportive interventions and suggestions</li>
+              <li>SMS and voice-based communications, reminders, and check-ins (with your consent)</li>
             </ul>
           </section>
 
@@ -182,16 +183,38 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold mb-4">10. Third-Party Integrations</h2>
             <p className="mb-4">
-              The Service integrates with third-party devices and platforms (such as Apple HealthKit, Samsung Health, Fitbit). Your use of these third-party services is subject to their respective terms and privacy policies.
+              The Service integrates with third-party devices, platforms, and service providers (such as Apple HealthKit, Samsung Health, Fitbit, and Twilio for communications). Your use of these third-party services is subject to their respective terms and privacy policies.
             </p>
             <p>
               We are not responsible for the operation, availability, or content of third-party services. Any issues with third-party integrations should be directed to the respective service provider.
             </p>
           </section>
 
+          {/* SMS and Voice Communications Terms */}
+          <section>
+            <h2 className="text-2xl font-bold mb-4">11. SMS and Voice Communications</h2>
+            <p className="mb-4">
+              MAON may offer SMS and voice communication features powered by Twilio. By opting in to receive SMS or voice communications, you agree to the following:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li><strong>Consent:</strong> You expressly consent to receive automated SMS messages and/or voice calls from MAON at the phone number you provide, including wellness check-ins, reminders, service notifications, and supportive interventions</li>
+              <li><strong>Frequency:</strong> Message frequency varies based on your settings and usage patterns</li>
+              <li><strong>Costs:</strong> Message and data rates may apply. MAON is not responsible for any charges from your mobile carrier</li>
+              <li><strong>Opt-out:</strong> You may opt out at any time by replying STOP to any SMS message or by updating your preferences in the app. After opting out, you will receive a one-time confirmation message</li>
+              <li><strong>Help:</strong> Reply HELP to any message for assistance, or contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></li>
+              <li><strong>Not required:</strong> Consent to receive SMS or voice communications is not a condition of purchasing any goods or services from MAON</li>
+            </ul>
+            <p className="mb-4">
+              Supported carriers include but are not limited to AT&amp;T, T-Mobile, Verizon, and Sprint. Service may not be available on all carriers.
+            </p>
+            <p>
+              MAON and its service providers (including Twilio) may use your phone number and messaging data only to deliver the communications you have consented to and for no other purpose. We will not share your phone number with third parties for their own marketing purposes.
+            </p>
+          </section>
+
           {/* Disclaimers */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">11. Disclaimers</h2>
+            <h2 className="text-2xl font-bold mb-4">12. Disclaimers</h2>
             <p className="mb-4 uppercase font-semibold">
               THE SERVICE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.
             </p>
@@ -211,7 +234,7 @@ export default function TermsOfService() {
 
           {/* Limitation of Liability */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">12. Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold mb-4">13. Limitation of Liability</h2>
             <p className="mb-4 uppercase font-semibold">
               TO THE MAXIMUM EXTENT PERMITTED BY LAW, MAON INTELLIGENCE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES.
             </p>
@@ -232,7 +255,7 @@ export default function TermsOfService() {
 
           {/* Indemnification */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">13. Indemnification</h2>
+            <h2 className="text-2xl font-bold mb-4">14. Indemnification</h2>
             <p>
               You agree to indemnify and hold harmless MAON Intelligence, its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable attorney&apos;s fees) arising from your use of the Service, violation of these Terms, or infringement of any third-party rights.
             </p>
@@ -240,7 +263,7 @@ export default function TermsOfService() {
 
           {/* Termination */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">14. Termination</h2>
+            <h2 className="text-2xl font-bold mb-4">15. Termination</h2>
             <p className="mb-4">
               You may terminate your account at any time by contacting us or using the account deletion feature in the app.
             </p>
@@ -260,7 +283,7 @@ export default function TermsOfService() {
 
           {/* Changes to Terms */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">15. Changes to Terms</h2>
+            <h2 className="text-2xl font-bold mb-4">16. Changes to Terms</h2>
             <p>
               We reserve the right to modify these Terms at any time. We will notify you of material changes by posting the updated Terms and updating the &quot;Last Updated&quot; date. Your continued use of the Service after such changes constitutes acceptance of the new Terms.
             </p>
@@ -268,7 +291,7 @@ export default function TermsOfService() {
 
           {/* Governing Law */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">16. Governing Law</h2>
+            <h2 className="text-2xl font-bold mb-4">17. Governing Law</h2>
             <p>
               These Terms shall be governed by and construed in accordance with the laws of the United States, without regard to conflict of law principles. Any disputes arising under these Terms shall be resolved in the courts located in the United States.
             </p>
@@ -276,7 +299,7 @@ export default function TermsOfService() {
 
           {/* Dispute Resolution */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">17. Dispute Resolution</h2>
+            <h2 className="text-2xl font-bold mb-4">18. Dispute Resolution</h2>
             <p className="mb-4">
               In the event of any dispute arising from these Terms or your use of the Service:
             </p>
@@ -289,7 +312,7 @@ export default function TermsOfService() {
 
           {/* Severability */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">18. Severability</h2>
+            <h2 className="text-2xl font-bold mb-4">19. Severability</h2>
             <p>
               If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
             </p>
@@ -297,7 +320,7 @@ export default function TermsOfService() {
 
           {/* Entire Agreement */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">19. Entire Agreement</h2>
+            <h2 className="text-2xl font-bold mb-4">20. Entire Agreement</h2>
             <p>
               These Terms, together with our Privacy Policy, constitute the entire agreement between you and MAON Intelligence regarding the Service and supersede all prior agreements and understandings.
             </p>
@@ -305,7 +328,7 @@ export default function TermsOfService() {
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">20. Contact Us</h2>
+            <h2 className="text-2xl font-bold mb-4">21. Contact Us</h2>
             <p className="mb-4">
               If you have any questions about these Terms, please contact us:
             </p>
