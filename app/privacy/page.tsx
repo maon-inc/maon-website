@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
           className="text-[#8d8d8d] mb-12"
           style={{ fontFamily: FONTS.sans }}
         >
-          Last Updated: March 2, 2025
+          Last Updated: March 5, 2026
         </p>
 
         <div
@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
 
             <h3 className="text-xl font-semibold mb-3 mt-6">3. Information You Provide</h3>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li>Account information (email address, name)</li>
+              <li>Account information (email address, name, phone number)</li>
               <li>Device preferences and settings</li>
               <li>Mood check-ins and self-reported data</li>
               <li>Responses to prompts and interventions</li>
@@ -106,6 +106,7 @@ export default function PrivacyPolicy() {
               <li><strong>Deliver interventions:</strong> Offer timely, supportive suggestions based on detected patterns in your data</li>
               <li><strong>Improve our Service:</strong> Understand how users interact with MAON to enhance features and user experience</li>
               <li><strong>Communicate with you:</strong> Send service-related notifications, updates, reminders, and wellness check-ins via SMS, voice, or push notifications</li>
+              <li><strong>Verify your identity:</strong> Send one-time verification codes (OTP) via SMS during account registration and login to confirm your identity</li>
               <li><strong>Ensure security:</strong> Detect and prevent fraud, abuse, and security incidents</li>
               <li><strong>Research and development:</strong> Develop new features and improve our AI models using aggregated, de-identified data</li>
             </ul>
@@ -215,17 +216,23 @@ export default function PrivacyPolicy() {
           {/* SMS and Voice Communications */}
           <section>
             <h2 className="text-2xl font-bold mb-4">SMS and Voice Communications</h2>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">Phone Verification (OTP)</h3>
             <p className="mb-4">
-              MAON uses Twilio, a third-party communications platform, to send SMS messages and voice communications. By providing your phone number and opting in to receive messages, you consent to receiving SMS and/or voice communications from MAON, including:
+              During account registration and login, we send one-time verification codes (OTP) via SMS to the phone number you provide. These messages are sent through Auth0&apos;s phone verification flow, which uses Twilio as the underlying delivery provider. The sole purpose of these messages is to verify your identity, and no marketing content is included. By providing your phone number during sign-up, you consent to receiving these verification messages. Standard message and data rates may apply.
+            </p>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">Optional Wellness Communications</h3>
+            <p className="mb-4">
+              If you separately opt in to receive additional SMS or voice communications from MAON, you may also receive:
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Wellness check-ins and reminders</li>
               <li>Service notifications and account alerts</li>
               <li>AI-generated supportive interventions</li>
-              <li>Verification codes and security messages</li>
             </ul>
             <p className="mb-4">
-              <strong>Message frequency varies.</strong> Message and data rates may apply. You can opt out at any time by replying STOP to any SMS message or by adjusting your communication preferences in the app. Reply HELP for assistance.
+              <strong>Message frequency varies.</strong> Message and data rates may apply. You can opt out of wellness communications at any time by replying STOP to any SMS message or by adjusting your communication preferences in the app. Reply HELP for assistance. Opting out of wellness communications does not affect verification messages required for account security.
             </p>
             <p className="mb-4">
               When we send you SMS or voice communications, your phone number and message data are processed by Twilio in accordance with{" "}
@@ -233,7 +240,7 @@ export default function PrivacyPolicy() {
               We do not share your phone number with third parties for marketing purposes.
             </p>
             <p>
-              Your consent to receive SMS or voice communications is not a condition of using the Service. You may use MAON without opting in to these communications.
+              Your consent to receive optional wellness communications is not a condition of using the Service. However, phone number verification via OTP is required to create and access your account.
             </p>
           </section>
 
