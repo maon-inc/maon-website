@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
           className="text-[#8d8d8d] mb-12"
           style={{ fontFamily: FONTS.sans }}
         >
-          Last Updated: March 5, 2026
+          Last Updated: March 7, 2026
         </p>
 
         <div
@@ -89,12 +89,25 @@ export default function PrivacyPolicy() {
             </ul>
 
             <h3 className="text-xl font-semibold mb-3 mt-6">5. Automatically Collected Information</h3>
-            <ul className="list-disc pl-6 space-y-2">
+            <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Device type, operating system, and version</li>
               <li>IP address and general location (country/region)</li>
               <li>App performance and crash data</li>
               <li>Usage analytics (features used, session duration)</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">6. Google Calendar Data</h3>
+            <p className="mb-3">
+              If you choose to connect your Google Calendar account to MAON, we access the following data through the Google Calendar API:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Calendar event titles, dates, times, and durations</li>
+              <li>Event frequency and scheduling patterns</li>
+              <li>Free/busy status</li>
+            </ul>
+            <p>
+              We access this data solely to analyze your scheduling patterns and provide personalized wellness insights, such as detecting overloaded schedules or insufficient rest periods. We do not access the content of event descriptions, attendee lists, or any other calendar metadata beyond what is listed above unless explicitly disclosed.
+            </p>
           </section>
 
           {/* How We Use Your Information */}
@@ -109,6 +122,7 @@ export default function PrivacyPolicy() {
               <li><strong>Verify your identity:</strong> Send one-time verification codes (OTP) via SMS during account registration and login to confirm your identity</li>
               <li><strong>Ensure security:</strong> Detect and prevent fraud, abuse, and security incidents</li>
               <li><strong>Research and development:</strong> Develop new features and improve our AI models using aggregated, de-identified data</li>
+              <li><strong>Calendar-based insights:</strong> Analyze your Google Calendar scheduling patterns to provide wellness recommendations, detect potential burnout indicators such as overloaded schedules, and suggest healthier time management habits</li>
             </ul>
           </section>
 
@@ -119,7 +133,7 @@ export default function PrivacyPolicy() {
               <strong>We do not sell your personal data.</strong> We may share your information only in the following circumstances:
             </p>
             <ul className="list-disc pl-6 space-y-3">
-              <li><strong>Service providers:</strong> We work with trusted third parties who help us operate our Service (cloud hosting, analytics, customer support, and communications platforms such as Twilio for SMS and voice services). These providers are bound by confidentiality obligations and process your data only on our behalf.</li>
+              <li><strong>Service providers:</strong> We work with trusted third parties who help us operate our Service (cloud hosting, analytics, customer support, and communications platforms such as Twilio for SMS and voice services). These providers are bound by confidentiality obligations and process your data only on our behalf. Google Calendar data is not shared with any third-party service providers except as necessary to provide the core functionality described in this policy.</li>
               <li><strong>With your consent:</strong> We may share data when you explicitly authorize us to do so.</li>
               <li><strong>Legal requirements:</strong> We may disclose information if required by law, court order, or government request.</li>
               <li><strong>Safety:</strong> We may share information if we believe it&apos;s necessary to prevent harm to you or others.</li>
@@ -150,6 +164,9 @@ export default function PrivacyPolicy() {
             <h2 className="text-2xl font-bold mb-4">Data Retention</h2>
             <p>
               We retain your personal information for as long as your account is active or as needed to provide you with our Service. You may request deletion of your data at any time. Upon account deletion, we will remove or anonymize your personal data within 30 days, except where retention is required by law.
+            </p>
+            <p className="mt-4">
+              Google Calendar data is retained only for as long as necessary to provide you with calendar-based wellness insights. If you disconnect your Google Calendar account or revoke access, we will delete all stored Google Calendar data within 30 days.
             </p>
           </section>
 
@@ -241,6 +258,72 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               Your consent to receive optional wellness communications is not a condition of using the Service. However, phone number verification via OTP is required to create and access your account.
+            </p>
+          </section>
+
+          {/* Google API Services User Data Policy */}
+          <section>
+            <h2 className="text-2xl font-bold mb-4">Google API Services User Data Policy</h2>
+            <p className="mb-4">
+              MAON&apos;s use and transfer to any other app of information received from Google APIs will adhere to the{" "}
+              <a href="https://developers.google.com/terms/api-services-user-data-policy" className="text-[#00A452] hover:underline" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.
+            </p>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">How We Access Google Calendar Data</h3>
+            <p className="mb-4">
+              When you connect your Google Calendar account to MAON, we request access to your calendar data through Google&apos;s OAuth 2.0 authorization flow. You will be prompted by Google to grant MAON permission before any data is accessed. We only request the minimum scopes necessary to provide calendar-based wellness insights.
+            </p>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">How We Use Google Calendar Data</h3>
+            <p className="mb-4">
+              We use your Google Calendar data exclusively to:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Analyze your scheduling patterns to detect signs of overwork, burnout, or insufficient rest</li>
+              <li>Provide personalized wellness recommendations based on your calendar activity</li>
+              <li>Correlate calendar patterns with your biometric and behavioral data to deliver more accurate insights</li>
+            </ul>
+            <p className="mb-4">
+              We do <strong>not</strong> use Google Calendar data for:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Serving advertisements or targeting ads</li>
+              <li>Selling or sharing data with third parties for their own purposes</li>
+              <li>Training generalized AI or machine learning models unrelated to your personal wellness insights</li>
+              <li>Any purpose other than providing and improving the MAON wellness features described in this policy</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">How We Store and Protect Google Calendar Data</h3>
+            <p className="mb-4">
+              All Google Calendar data is encrypted in transit (TLS 1.2+) and at rest (AES-256). Access to this data is strictly limited to the systems and personnel necessary to provide the Service. We do not store raw calendar data longer than necessary to generate your wellness insights.
+            </p>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">How We Share Google Calendar Data</h3>
+            <p className="mb-4">
+              We do not sell, rent, or share your Google Calendar data with any third parties, except:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>With your explicit consent</li>
+              <li>As necessary to comply with applicable law, regulation, or legal process</li>
+              <li>To protect the safety, rights, or property of MAON, our users, or the public</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">Limited Use Disclosure</h3>
+            <p className="mb-4">
+              Notwithstanding anything else in this Privacy Policy, MAON&apos;s use of information received from Google APIs adheres to the{" "}
+              <a href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes" className="text-[#00A452] hover:underline" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements. Specifically:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>We only use Google Calendar data to provide and improve user-facing features that are prominent in the MAON application&apos;s user interface</li>
+              <li>We do not transfer Google Calendar data to third parties unless necessary to provide or improve user-facing features, as required by law, or with the user&apos;s affirmative consent</li>
+              <li>We do not use Google Calendar data for serving advertisements</li>
+              <li>Humans do not read Google Calendar data unless we have your affirmative consent, it is necessary for security purposes, to comply with applicable law, or our use is limited to internal operations with data that has been aggregated and anonymized</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">Revoking Access</h3>
+            <p>
+              You can disconnect your Google Calendar from MAON at any time through your account settings in the app or by visiting your{" "}
+              <a href="https://myaccount.google.com/permissions" className="text-[#00A452] hover:underline" target="_blank" rel="noopener noreferrer">Google Account permissions page</a>. Upon revocation, we will stop accessing your Google Calendar data and delete all stored Google Calendar data within 30 days.
             </p>
           </section>
 
