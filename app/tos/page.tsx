@@ -201,7 +201,7 @@ export default function TermsOfService() {
               <li><strong>Frequency:</strong> Message frequency varies based on your settings and usage patterns</li>
               <li><strong>Costs:</strong> Message and data rates may apply. MAON is not responsible for any charges from your mobile carrier</li>
               <li><strong>Opt-out:</strong> You may opt out at any time by replying STOP to any SMS message or by updating your preferences in the app. After opting out, you will receive a one-time confirmation message</li>
-              <li><strong>Help:</strong> Reply HELP to any message for assistance, or contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></li>
+              <li><strong>Help:</strong> Reply HELP to any message for assistance, or contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a> or <a href="mailto:daniel.lee@maonhealth.com" className="text-[#00A452] hover:underline">daniel.lee@maonhealth.com</a></li>
               <li><strong>Not required:</strong> Consent to receive SMS or voice communications is not a condition of purchasing any goods or services from MAON</li>
             </ul>
             <p className="mb-4">
@@ -334,7 +334,7 @@ export default function TermsOfService() {
             </p>
             <div className="bg-white p-6 rounded-xl border border-[#e5e5e5]">
               <p className="font-semibold mb-2">MAON Intelligence</p>
-              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></p>
+              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a> | <a href="mailto:daniel.lee@maonhealth.com" className="text-[#00A452] hover:underline">daniel.lee@maonhealth.com</a></p>
             </div>
           </section>
         </div>

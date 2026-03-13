@@ -187,7 +187,7 @@ export default function PrivacyPolicy() {
               <li><strong>Withdraw consent:</strong> Withdraw previously given consent at any time</li>
             </ul>
             <p className="mt-4">
-              To exercise these rights, please contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a>.
+              To exercise these rights, please contact us at <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a> or <a href="mailto:daniel.lee@maonhealth.com" className="text-[#00A452] hover:underline">daniel.lee@maonhealth.com</a>.
             </p>
           </section>
 
@@ -358,7 +358,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="bg-white p-6 rounded-xl border border-[#e5e5e5]">
               <p className="font-semibold mb-2">MAON Intelligence</p>
-              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a></p>
+              <p>Email: <a href="mailto:lks@maonhealth.com" className="text-[#00A452] hover:underline">lks@maonhealth.com</a> | <a href="mailto:daniel.lee@maonhealth.com" className="text-[#00A452] hover:underline">daniel.lee@maonhealth.com</a></p>
             </div>
           </section>
         </div>
