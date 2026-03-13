@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
           className="text-[#8d8d8d] mb-12"
           style={{ fontFamily: FONTS.sans }}
         >
-          Last Updated: March 7, 2026
+          Last Updated: March 13, 2026
         </p>
 
         <div
@@ -98,15 +98,19 @@ export default function PrivacyPolicy() {
 
             <h3 className="text-xl font-semibold mb-3 mt-6">6. Google Calendar Data</h3>
             <p className="mb-3">
-              If you choose to connect your Google Calendar account to MAON, we access the following data through the Google Calendar API:
+              If you choose to connect your Google Calendar account to MAON, we access and may modify your calendar data through the Google Calendar API. The scope of access includes the ability to see, edit, share, and permanently delete all calendars you can access using Google Calendar. Specifically, we may read and interact with:
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Calendar event titles, dates, times, and durations</li>
               <li>Event frequency and scheduling patterns</li>
-              <li>Free/busy status</li>
+              <li>Free/busy status across all your calendars</li>
+              <li>Calendar metadata (names, sharing settings) necessary to place wellness events in the right calendar</li>
             </ul>
+            <p className="mb-3">
+              We use this access to correlate your calendar data with biometric signals from your wearable (such as stress levels, heart rate variability, and sleep quality) in order to identify patterns — for example, how meeting density or schedule gaps relate to physiological stress markers. This analysis powers personalized wellness recommendations to help you optimize your daily routines.
+            </p>
             <p>
-              We access this data solely to analyze your scheduling patterns and provide personalized wellness insights, such as detecting overloaded schedules or insufficient rest periods. We do not access the content of event descriptions, attendee lists, or any other calendar metadata beyond what is listed above unless explicitly disclosed.
+              With your explicit consent, MAON may also create, modify, or delete calendar events on your behalf — for example, adding a recovery block after a high-stress period or removing a suggested event you no longer need. You will always be asked before any calendar write or delete action is taken. You can revoke calendar access at any time through your account settings.
             </p>
           </section>
 
@@ -122,7 +126,7 @@ export default function PrivacyPolicy() {
               <li><strong>Verify your identity:</strong> Send one-time verification codes (OTP) via SMS during account registration and login to confirm your identity</li>
               <li><strong>Ensure security:</strong> Detect and prevent fraud, abuse, and security incidents</li>
               <li><strong>Research and development:</strong> Develop new features and improve our AI models using aggregated, de-identified data</li>
-              <li><strong>Calendar-based insights:</strong> Analyze your Google Calendar scheduling patterns to provide wellness recommendations, detect potential burnout indicators such as overloaded schedules, and suggest healthier time management habits</li>
+              <li><strong>Calendar-based insights:</strong> Correlate your Google Calendar data with biometric signals from your wearable to identify how scheduling patterns (meeting density, schedule gaps) relate to physiological stress markers, and — with your explicit consent — suggest or create calendar adjustments such as recovery blocks to help you optimize your wellbeing</li>
             </ul>
           </section>
 
@@ -271,7 +275,7 @@ export default function PrivacyPolicy() {
 
             <h3 className="text-xl font-semibold mb-3 mt-6">How We Access Google Calendar Data</h3>
             <p className="mb-4">
-              When you connect your Google Calendar account to MAON, we request access to your calendar data through Google&apos;s OAuth 2.0 authorization flow. You will be prompted by Google to grant MAON permission before any data is accessed. We only request the minimum scopes necessary to provide calendar-based wellness insights.
+              When you connect your Google Calendar account to MAON, we request access through Google&apos;s OAuth 2.0 authorization flow. You will be prompted by Google to explicitly grant MAON permission before any data is accessed or modified. We request the scope necessary to read your calendar events for biometric-correlation analysis and, with your separate in-app consent, to create or modify events (such as wellness blocks) on your behalf. This broader access is required because schedule adjustments — adding recovery time, rescheduling suggested events — involve write and delete operations across your calendars.
             </p>
 
             <h3 className="text-xl font-semibold mb-3 mt-6">How We Use Google Calendar Data</h3>
@@ -279,9 +283,11 @@ export default function PrivacyPolicy() {
               We use your Google Calendar data exclusively to:
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li>Analyze your scheduling patterns to detect signs of overwork, burnout, or insufficient rest</li>
-              <li>Provide personalized wellness recommendations based on your calendar activity</li>
-              <li>Correlate calendar patterns with your biometric and behavioral data to deliver more accurate insights</li>
+              <li>Correlate calendar events (meeting density, schedule gaps, recurring commitments) with biometric signals from your wearable — such as stress levels, heart rate variability, and sleep quality — to identify patterns that affect your wellbeing</li>
+              <li>Provide personalized wellness recommendations based on how your schedule relates to your physiological state (e.g., flagging high-stress meeting blocks, identifying recovery opportunities)</li>
+              <li>Analyze scheduling patterns to detect signs of overwork, burnout, or insufficient rest</li>
+              <li>With your explicit in-app consent, suggest or create calendar adjustments — such as adding recovery blocks after high-stress periods or rescheduling conflicting commitments — to help you optimize your daily routines</li>
+              <li>Remove or modify calendar events that MAON previously created on your behalf, when you request it</li>
             </ul>
             <p className="mb-4">
               We do <strong>not</strong> use Google Calendar data for:
@@ -290,6 +296,7 @@ export default function PrivacyPolicy() {
               <li>Serving advertisements or targeting ads</li>
               <li>Selling or sharing data with third parties for their own purposes</li>
               <li>Training generalized AI or machine learning models unrelated to your personal wellness insights</li>
+              <li>Reading event descriptions, attendee details, or private notes unless explicitly displayed to you within the app</li>
               <li>Any purpose other than providing and improving the MAON wellness features described in this policy</li>
             </ul>
 
