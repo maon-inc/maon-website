@@ -7,6 +7,7 @@ import { HOOK, FONT_SIZES, FONT_SIZES_MOBILE, FONTS } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
+import { trackSectionViewed, trackCtaClick } from "@/lib/analytics";
 
 // Column 1 cards - in order
 const COLUMN_1_CARDS = [
@@ -68,6 +69,7 @@ export default function Hook() {
   const containerRef = useRef<HTMLDivElement>(null);
   const revealContainerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasCapturedSection = useRef(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // pixels
   const [isHovering, setIsHovering] = useState(false);
   const isMobile = useIsMobile();
@@ -83,7 +85,13 @@ export default function Hook() {
     return observeIntersection(
       el,
       (intersecting) => {
-        if (intersecting) setIsVisible(true);
+        if (intersecting) {
+          setIsVisible(true);
+          if (!hasCapturedSection.current) {
+            trackSectionViewed("hook");
+            hasCapturedSection.current = true;
+          }
+        }
       },
       { threshold: 0 }
     );
@@ -367,6 +375,7 @@ export default function Hook() {
 
           <Link
             href={HOOK.cta.href}
+            onClick={() => trackCtaClick("save_your_spot", "hook_hero")}
             className="mt-6 inline-flex w-fit items-center justify-center gap-2 px-5 py-2.5 font-normal text-white transition-opacity hover:opacity-90"
             style={{
               fontSize: "16px",

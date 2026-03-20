@@ -4,10 +4,12 @@ import { useRef, useEffect, useState } from "react";
 import { PROBLEM, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { trackSectionViewed } from "@/lib/analytics";
 
 export default function Problem() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasCapturedSection = useRef(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
@@ -18,7 +20,13 @@ export default function Problem() {
     return observeIntersection(
       el,
       (intersecting) => {
-        if (intersecting) setIsVisible(true);
+        if (intersecting) {
+          setIsVisible(true);
+          if (!hasCapturedSection.current) {
+            trackSectionViewed("problem");
+            hasCapturedSection.current = true;
+          }
+        }
       },
       { threshold: 0 }
     );

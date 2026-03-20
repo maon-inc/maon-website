@@ -4,6 +4,7 @@ import Nav from "@/components/ui/Nav";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { PostHogEarlyBirdCancel } from "@/components/providers/PostHogEarlyBirdCancel";
+import { ScrollDepthTracker } from "@/components/providers/ScrollDepthTracker";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className="antialiased">
         <PostHogProvider>
           <PostHogEarlyBirdCancel />
+          <ScrollDepthTracker />
           <ScrollProvider>
             <ConvexClientProvider>
               <Nav />
