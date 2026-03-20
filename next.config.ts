@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
-const posthogHost =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
-const posthogAssetsHost = posthogHost.replace(
-  /\/\/([^.]+)\./,
-  "//$1-assets."
-);
+const posthogHost = (
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
+).replace(/\/+$/, "");
+const posthogAssetsHost =
+  process.env.NEXT_PUBLIC_POSTHOG_ASSETS_HOST ||
+  (posthogHost.includes(".i.posthog.com")
+    ? posthogHost.replace(/\/\/([^.]+)\./, "//$1-assets.")
+    : posthogHost);
 
 const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,

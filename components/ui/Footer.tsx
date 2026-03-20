@@ -86,7 +86,7 @@ export default function Footer() {
               </Link>
               <Link
                 href="/tos"
-                onClick={() => trackCtaClick("terms_of_condition", "footer")}
+                onClick={() => trackCtaClick("terms_of_service", "footer")}
                 className="font-bold text-[#8C8C8C] hover:opacity-70 transition-opacity"
                 style={textStyle}
               >
@@ -166,7 +166,7 @@ export default function Footer() {
             </Link>
             <Link
               href="/tos"
-              onClick={() => trackCtaClick("terms_of_condition", "footer")}
+              onClick={() => trackCtaClick("terms_of_service", "footer")}
               className="font-bold text-[#8C8C8C] hover:opacity-70 transition-opacity"
               style={textStyle}
             >

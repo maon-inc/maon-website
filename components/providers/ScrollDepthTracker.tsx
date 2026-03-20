@@ -10,6 +10,7 @@ export function ScrollDepthTracker() {
 
   useEffect(() => {
     let ticking = false
+    let rafId: number | null = null
 
     const checkScrollDepth = () => {
       const scrollTop = window.scrollY
@@ -30,14 +31,18 @@ export function ScrollDepthTracker() {
       if (ticking) return
       ticking = true
 
-      requestAnimationFrame(() => {
+      rafId = requestAnimationFrame(() => {
         checkScrollDepth()
         ticking = false
+        rafId = null
       })
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return null
