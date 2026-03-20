@@ -7,10 +7,12 @@ import { observeIntersection } from "@/motion/observe";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePostHog } from "posthog-js/react";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
+import { trackSectionViewed } from "@/lib/analytics";
 
 export default function Vision() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasCapturedSection = useRef(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
   const posthog = usePostHog();
@@ -27,7 +29,13 @@ export default function Vision() {
     return observeIntersection(
       el,
       (intersecting) => {
-        if (intersecting) setIsVisible(true);
+        if (intersecting) {
+          setIsVisible(true);
+          if (!hasCapturedSection.current) {
+            trackSectionViewed("vision");
+            hasCapturedSection.current = true;
+          }
+        }
         setIsVisionVisible(intersecting);
       },
       { threshold: 0 }

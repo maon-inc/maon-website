@@ -5,10 +5,12 @@ import Image from "next/image";
 import { DOS_DONTS, FONT_SIZES, FONT_SIZES_MOBILE } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { trackSectionViewed } from "@/lib/analytics";
 
 export default function DosDonts() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasCapturedSection = useRef(false);
   const isMobile = useIsMobile();
   const fonts = isMobile ? FONT_SIZES_MOBILE : FONT_SIZES;
 
@@ -60,7 +62,13 @@ export default function DosDonts() {
     return observeIntersection(
       el,
       (intersecting) => {
-        if (intersecting) setIsVisible(true);
+        if (intersecting) {
+          setIsVisible(true);
+          if (!hasCapturedSection.current) {
+            trackSectionViewed("dos_donts");
+            hasCapturedSection.current = true;
+          }
+        }
       },
       { threshold: 0 }
     );

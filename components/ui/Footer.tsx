@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { FONTS } from "@/lib/constants";
+import { trackCtaClick } from "@/lib/analytics";
 
 export default function Footer() {
   const textStyle = {
@@ -75,6 +78,7 @@ export default function Footer() {
             <div className="flex items-center gap-6">
               <Link
                 href="/privacy"
+                onClick={() => trackCtaClick("privacy", "footer")}
                 className="font-bold text-[#8C8C8C] hover:opacity-70 transition-opacity"
                 style={textStyle}
               >
@@ -82,6 +86,7 @@ export default function Footer() {
               </Link>
               <Link
                 href="/tos"
+                onClick={() => trackCtaClick("terms_of_condition", "footer")}
                 className="font-bold text-[#8C8C8C] hover:opacity-70 transition-opacity"
                 style={textStyle}
               >

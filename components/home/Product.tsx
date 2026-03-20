@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { APPROACH } from "@/lib/constants";
 import { observeIntersection } from "@/motion/observe";
+import { trackSectionViewed } from "@/lib/analytics";
 
 const PRODUCT_CARDS = [
   {
@@ -35,6 +36,7 @@ const PRODUCT_CARDS = [
 export default function Product() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasCapturedSection = useRef(false);
 
   const fadeUpStyle = (delaySeconds: number = 0) => ({
     opacity: isVisible ? 1 : 0,
@@ -49,7 +51,13 @@ export default function Product() {
     return observeIntersection(
       el,
       (intersecting) => {
-        if (intersecting) setIsVisible(true);
+        if (intersecting) {
+          setIsVisible(true);
+          if (!hasCapturedSection.current) {
+            trackSectionViewed("product");
+            hasCapturedSection.current = true;
+          }
+        }
       },
       { threshold: 0 }
     );
