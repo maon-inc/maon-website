@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "pages:build": "npx @opennextjs/cloudflare build",
-    "preview": "npx @opennextjs/cloudflare build && wrangler pages dev"
+    "preview": "npm run pages:build && wrangler pages dev"
   },
   "dependencies": {
     "@convex-dev/stripe": "^0.1.3",
