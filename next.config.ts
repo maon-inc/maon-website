@@ -10,6 +10,9 @@ const posthogAssetsHost =
     : posthogHost);
 
 const nextConfig: NextConfig = {
+  images: {
+    unoptimized: true,
+  },
   skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
